@@ -1,0 +1,9 @@
+# Mathematica #
+###############
+*.nb binary
+
+# Export #
+##########
+main/ export-ignore
+python/build export-ignore
+Makefile export-ignore

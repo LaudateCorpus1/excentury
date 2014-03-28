@@ -1,0 +1,124 @@
+"""Tools
+
+This collection of functions are examples of how to use the objects
+in excentury/tools.
+
+"""
+[[
+//Comment before inclusion of excentury
+]]
+
+----------------------------------------------------------------------
+
+//Comment for square_root
+
+@def{square_root}
+    """Compute the square root of a number using Newton's method.
+    This function will print to stdout the amount of time it took to
+    execute."""
+    @param{double, x(2), "the input to the square root function."}
+    @param{double, x0(0), "initial guess."}
+    @param{int, iter(10), "number of iterations."}
+@body[[
+    if (x < 0) {
+        excentury::error("input `x` must be non-negative");
+    }
+    excentury::timer tm;
+    double a = x;
+    x = x0;
+    tm.tic();
+    for (int i=0; i < iter; ++i) {
+        x = x - (x*x - a)/(2.0*x);
+    }
+    tm.toc(true);
+    tm.print_date("%c\n");
+]]
+@ret[[
+    @ret{x, "ans"}
+]]
+//Comment for square_root epilog
+
+----------------------------------------------------------------------
+//Comment for rand_array
+
+@def{rand_array}
+    """Get an array of random numbers from a uniform distribution."""
+    @param{int, n(10), "amount of random numbers."}
+    @param{double, mean(0), "the mean of the distribution."}
+    @param{double, std(1), "the standard deviation of the distribution."}
+@body[[
+    excentury::MTRand rg;
+    std::vector<double> val(n);
+    for (int i=0; i < n; ++i) {
+        val[i] = excentury::uniform_rand(rg, mean, std);
+    }
+]]
+@ret[[
+    @ret{val}
+]]
+//Comment for rand_array epilog
+
+----------------------------------------------------------------------
+//Comment for test_rep
+
+@def{test_rep}
+    """This function will do useless computation for the sake of
+    testing the reporter object which will print messages to
+    stdout."""
+@body[[
+    int a = 0;
+    printf("A = %d\n", a);
+    class sim_reporter: public excentury::Reporter {
+    public:
+        const int& a;
+        sim_reporter(int& a_):
+            a(a_),
+            excentury::Reporter(10, stdout)
+        {}
+        void report() {
+            fprintf(fp, "Value of a = %d\n", this->a);
+        }
+    };
+    sim_reporter rep(a);
+    for (int i=0; i < 10000; ++i) {
+        for (int j=0; j < 100000; ++j) {
+            for (int k =0; k < 1000; ++k) {
+                a = i+j+k;
+            }
+        }
+    }
+    rep.end_report(); // Can be omitted
+    printf("A = %d\n", a);
+]]
+@ret[[]]
+//Comment for test_rep epilog
+
+----------------------------------------------------------------------
+
+//Comment for sin_vector
+
+@def{sin_vector}
+    """Given a vector of values, it returns the sin of each of its
+    elements. """
+    @param{excentury::DynamicTensor<2, double>, v, "input vector", v[0]}
+    @param{excentury::StaticTensor<2, 6, double>, w(3, 2), "input vector", w[0]}
+@body[[
+    for (size_t i=0; i < v.dim(0); ++i) {
+        for (size_t j=0; j < v.dim(1); ++j) {
+            v(i, j) = sin(v(i, j));
+        }
+    }
+    for (size_t i=0; i < w.dim(0); ++i) {
+        for (size_t j=0; j < w.dim(1); ++j) {
+            w(i, j) *= 2;
+        }
+    }
+]]
+@ret[[
+    @ret{v, "v", v[0]}
+    @ret{w, "w", w[0]}
+]]
+//Comment for test_rep epilog
+
+----------------------------------------------------------------------
+

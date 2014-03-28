@@ -1,0 +1,132 @@
+"""Util
+
+This collection of functions demostrate how to create functions
+compatible with python and cpp. 
+
+"""
+#include <objects.h>
+
+----------------------------------------------------------------------
+
+// square
+@def{square}
+    """return the square of the number. """
+    @param{double, x(2), "number to be squared."}
+@body[[
+    double result = x*x;
+]]
+@ret{"tmp.txt"}[[
+    @ret{result}
+]]
+
+----------------------------------------------------------------------
+// cube
+@def{cube}
+    """cube a number"""
+    @param{int, x(3), "number to be cubed."}
+@body[[
+    int result = x*x*x;
+]]
+@ret[[
+    @ret{result}
+]]
+
+----------------------------------------------------------------------
+// move_point
+@def{move_point}
+    """Adds a number to each of the coordinates of a point."""
+    @param{Point, p, "the point to be moved."}
+    @param{double, x(1), "the amount the point should be moved."}
+@body[[
+    p.x += x;
+    p.y += x;
+]]
+@ret[[
+    @ret{p}
+]]
+
+----------------------------------------------------------------------
+// make_line
+@def{make_line}
+    """Given two points, it constructs a line. """
+    @param{Point, p1, "the first point."}
+    @param{Point, p2, "the second point."}
+@body[[
+    Line l(p1.x, p1.y, p2.x, p2.y);
+]]
+@ret[[
+    @ret{l}
+]]
+
+----------------------------------------------------------------------
+// scale
+@def{scale}
+    """Scalar multiplication. """
+    @param{std::vector<double>, v, "the vector to multiply. ", v[0]}
+    @param{double, alpha, "the scalar."}
+@body[[
+    for (int i=0; i < v.size(); ++i) {
+        v[i] *= alpha;
+    }
+]]
+@ret[[
+    @ret{v}
+]]
+
+// epilog for scale
+
+----------------------------------------------------------------------
+// print_msg
+@def{print_msg}
+    """Print a message to the standard error stream. """
+    @param{std::string, msg, "the message to be printed."}
+@body[[
+    fprintf(stderr, "%s\n", msg.c_str());
+]]
+@ret[[
+]]
+
+----------------------------------------------------------------------
+// gen_tensors
+@def{gen_tensors}
+    """Generate tensors of dimension 4. """
+@body[[
+    size_t size[4] = {2, 3, 4, 5};
+    excentury::DynamicTensor<4, double, 0, 0> v1(size);
+    excentury::DynamicTensor<4, double, 0, 1> v2(size);
+    for (int i=0; i < 120; ++i) {
+        v1[i] = i;
+        v2[i] = i;
+    }
+    size_t tmp1[4] = {1,1,1,1};
+    size_t tmp2[4] = {1,2,3,4};
+    printf("v1(1,1,1,1) = %g\n", v1(tmp1));
+    printf("v1(1,2,3,4) = %g\n", v1(tmp2));
+    printf("v2(1,1,1,1) = %g\n", v2(tmp1));
+    printf("v2(1,2,3,4) = %g\n", v2(tmp2));
+]]
+@ret[[
+    @ret{v1}
+    @ret{v2}
+]]
+
+----------------------------------------------------------------------
+// scale_array
+@def{scale_array}
+    """scale a one dimentional array."""
+    @param{excentury::DynamicTensor<1, double, 0, 1>, v,
+           "the array to be scaled.", v[0]}
+    @param{double, s, "the scalar factor."}
+@body[[
+    for (int i=0; i < v.dim(); ++i) {
+        v[i] *= s;
+    }
+]]
+@ret[[
+    @ret{v}
+]]
+
+// epilog for scale_array
+----------------------------------------------------------------------
+
+// EPILOG FOR THE WHOLE FILE
