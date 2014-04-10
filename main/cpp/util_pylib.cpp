@@ -1,8 +1,9 @@
-// File generated on Wed Jan 22, 2014 02:27:44 AM by xcpp.
+// File generated on Wed Apr 09, 2014 04:03:46 PM by xcpp.
 /*Util
 
 This collection of functions demostrate how to create functions
 compatible with python and cpp.*/
+#define XC_PYTHON
 #include <excentury/excentury.h>
 #include <objects.h>
 
@@ -29,6 +30,7 @@ extern "C" {
 // square
 std::string square_py_str;
 void square_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     double x(2); XC_LI_.load(x);
     XC_LI_.close();
@@ -41,6 +43,10 @@ void square_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     square_py_str = XC_DI_.str();
     ncout = square_py_str.size();
     pcout = (char*)square_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void square_py_clear() {
     square_py_str.clear();
@@ -49,6 +55,7 @@ void square_py_clear() {
 // cube
 std::string cube_py_str;
 void cube_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     int x(3); XC_LI_.load(x);
     XC_LI_.close();
@@ -61,6 +68,10 @@ void cube_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     cube_py_str = XC_DI_.str();
     ncout = cube_py_str.size();
     pcout = (char*)cube_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void cube_py_clear() {
     cube_py_str.clear();
@@ -69,6 +80,7 @@ void cube_py_clear() {
 // move_point
 std::string move_point_py_str;
 void move_point_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     Point p; XC_LI_.load(p);
     double x(1); XC_LI_.load(x);
@@ -83,6 +95,10 @@ void move_point_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     move_point_py_str = XC_DI_.str();
     ncout = move_point_py_str.size();
     pcout = (char*)move_point_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void move_point_py_clear() {
     move_point_py_str.clear();
@@ -91,6 +107,7 @@ void move_point_py_clear() {
 // make_line
 std::string make_line_py_str;
 void make_line_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     Point p1; XC_LI_.load(p1);
     Point p2; XC_LI_.load(p2);
@@ -104,6 +121,10 @@ void make_line_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     make_line_py_str = XC_DI_.str();
     ncout = make_line_py_str.size();
     pcout = (char*)make_line_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void make_line_py_clear() {
     make_line_py_str.clear();
@@ -112,12 +133,13 @@ void make_line_py_clear() {
 // scale
 std::string scale_py_str;
 void scale_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     std::vector<double> v; XC_LI_.load(v, v[0]);
     double alpha; XC_LI_.load(alpha);
     XC_LI_.close();
 
-    for (int i=0; i < v.size(); ++i) {
+    for (unsigned int i=0; i < v.size(); ++i) {
         v[i] *= alpha;
     }
 
@@ -127,6 +149,10 @@ void scale_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     scale_py_str = XC_DI_.str();
     ncout = scale_py_str.size();
     pcout = (char*)scale_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void scale_py_clear() {
     scale_py_str.clear();
@@ -136,6 +162,7 @@ void scale_py_clear() {
 // print_msg
 std::string print_msg_py_str;
 void print_msg_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     std::string msg; XC_LI_.load(msg);
     XC_LI_.close();
@@ -148,6 +175,10 @@ void print_msg_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     print_msg_py_str = XC_DI_.str();
     ncout = print_msg_py_str.size();
     pcout = (char*)print_msg_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void print_msg_py_clear() {
     print_msg_py_str.clear();
@@ -156,12 +187,13 @@ void print_msg_py_clear() {
 // gen_tensors
 std::string gen_tensors_py_str;
 void gen_tensors_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     XC_LI_.close();
 
     size_t size[4] = {2, 3, 4, 5};
-    excentury::dynamicTensor<4, double, 0, 0> v1(size);
-    excentury::dynamicTensor<4, double, 0, 1> v2(size);
+    excentury::DynamicTensor<4, double, 0, 0> v1(size);
+    excentury::DynamicTensor<4, double, 0, 1> v2(size);
     for (int i=0; i < 120; ++i) {
         v1[i] = i;
         v2[i] = i;
@@ -180,6 +212,10 @@ void gen_tensors_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     gen_tensors_py_str = XC_DI_.str();
     ncout = gen_tensors_py_str.size();
     pcout = (char*)gen_tensors_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void gen_tensors_py_clear() {
     gen_tensors_py_str.clear();
@@ -188,12 +224,13 @@ void gen_tensors_py_clear() {
 // scale_array
 std::string scale_array_py_str;
 void scale_array_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
-    excentury::dynamicTensor<1, double, 0, 1> v; XC_LI_.load(v, v[0]);
+    excentury::DynamicTensor<1, double, 0, 1> v; XC_LI_.load(v, v[0]);
     double s; XC_LI_.load(s);
     XC_LI_.close();
 
-    for (int i=0; i < v.dim(); ++i) {
+    for (unsigned int i=0; i < v.dim(); ++i) {
         v[i] *= s;
     }
 
@@ -203,6 +240,10 @@ void scale_array_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
     scale_array_py_str = XC_DI_.str();
     ncout = scale_array_py_str.size();
     pcout = (char*)scale_array_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    ncout = run_error.size();
+    pcout = (char*)run_error.c_str();
+}
 }
 void scale_array_py_clear() {
     scale_array_py_str.clear();

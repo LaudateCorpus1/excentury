@@ -1,4 +1,4 @@
-# File generated on Sat Jan 04, 2014 02:01:42 AM by xcpp.
+# File generated on Wed Apr 09, 2014 04:03:49 PM by xcpp.
 """Util
 
 This collection of functions demostrate how to create functions
@@ -40,6 +40,9 @@ def square(x, unpack=True):
                   c_char_p(in_str),
                   ctypes.byref(len_out),
                   ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.square_py_clear()
     if unpack:
@@ -69,6 +72,9 @@ def cube(x, unpack=True):
                 c_char_p(in_str),
                 ctypes.byref(len_out),
                 ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.cube_py_clear()
     if unpack:
@@ -100,6 +106,9 @@ def move_point(p, x, unpack=True):
                       c_char_p(in_str),
                       ctypes.byref(len_out),
                       ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.move_point_py_clear()
     if unpack:
@@ -131,6 +140,9 @@ def make_line(p1, p2, unpack=True):
                      c_char_p(in_str),
                      ctypes.byref(len_out),
                      ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.make_line_py_clear()
     if unpack:
@@ -162,6 +174,9 @@ def scale(v, alpha, unpack=True):
                  c_char_p(in_str),
                  ctypes.byref(len_out),
                  ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.scale_py_clear()
     if unpack:
@@ -191,6 +206,9 @@ def print_msg(msg, unpack=True):
                      c_char_p(in_str),
                      ctypes.byref(len_out),
                      ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.print_msg_py_clear()
     if unpack:
@@ -215,6 +233,9 @@ def gen_tensors(unpack=True):
                        c_char_p(in_str),
                        ctypes.byref(len_out),
                        ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.gen_tensors_py_clear()
     if unpack:
@@ -246,6 +267,9 @@ def scale_array(v, s, unpack=True):
                        c_char_p(in_str),
                        ctypes.byref(len_out),
                        ctypes.byref(out_str))
+    if out_str[:1] == 'E':
+        xc_error_msg = out_str[1:len_out.value]
+        raise RuntimeError(xc_error_msg)
     val = TextParser(out_str[:len_out.value]).parse()
     LIB.scale_array_py_clear()
     if unpack:

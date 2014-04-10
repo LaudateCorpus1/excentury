@@ -1,9 +1,7 @@
-// File generated on Wed Jan 22, 2014 01:33:33 AM by xcpp.
+// File generated on Mon Apr 07, 2014 01:31:31 AM by xcpp.
 //Comment before inclusion of excentury
 #include <excentury/excentury.h>
 #include <excentury/hook/cpp.h>
-#include <excentury/tools/reporter.h>
-#include <excentury/tools/rand.h>
 //Comment for rand_array
 void xc_help() {
     fprintf(stderr,
@@ -35,7 +33,7 @@ int main(int argc, char** argv) {
     double std(1); XC_LI_.load(std);
     XC_LI_.close();
 
-    excentury::mtRand rg;
+    excentury::MTRand rg;
     std::vector<double> val(n);
     for (int i=0; i < n; ++i) {
         val[i] = excentury::uniform_rand(rg, mean, std);

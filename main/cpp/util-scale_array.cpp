@@ -1,4 +1,4 @@
-// File generated on Wed Jan 29, 2014 10:13:33 PM by xcpp.
+// File generated on Wed Apr 09, 2014 04:04:12 PM by xcpp.
 #include <excentury/excentury.h>
 #include <excentury/hook/cpp.h>
 #include <objects.h>
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     double s; XC_LI_.load(s);
     XC_LI_.close();
 
-    for (int i=0; i < v.dim(); ++i) {
+    for (unsigned int i=0; i < v.dim(); ++i) {
         v[i] *= s;
     }
 

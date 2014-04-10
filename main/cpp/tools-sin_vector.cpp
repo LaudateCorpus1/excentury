@@ -1,9 +1,7 @@
-// File generated on Wed Jan 29, 2014 10:12:44 PM by xcpp.
+// File generated on Mon Apr 07, 2014 01:31:33 AM by xcpp.
 //Comment before inclusion of excentury
 #include <excentury/excentury.h>
 #include <excentury/hook/cpp.h>
-#include <excentury/tools/reporter.h>
-#include <excentury/tools/rand.h>
 //Comment for sin_vector
 void xc_help() {
     fprintf(stderr,
@@ -34,13 +32,13 @@ int main(int argc, char** argv) {
     excentury::StaticTensor<2, 6, double> w(3, 2); XC_LI_.load(w, w[0]);
     XC_LI_.close();
 
-    for (int i=0; i < v.dim(0); ++i) {
-        for (int j=0; j < v.dim(1); ++j) {
+    for (size_t i=0; i < v.dim(0); ++i) {
+        for (size_t j=0; j < v.dim(1); ++j) {
             v(i, j) = sin(v(i, j));
         }
     }
-    for (int i=0; i < w.dim(0); ++i) {
-        for (int j=0; j < w.dim(1); ++j) {
+    for (size_t i=0; i < w.dim(0); ++i) {
+        for (size_t j=0; j < w.dim(1); ++j) {
             w(i, j) *= 2;
         }
     }

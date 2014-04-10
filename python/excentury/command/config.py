@@ -6,8 +6,10 @@ the rest of the modules in excentury.
 """
 
 import os
+import sys
 import textwrap
-import configparser
+import argparse
+from collections import OrderedDict
 from excentury.command import error, import_mod
 
 DESC = """Edit a configuration file for excentury.
@@ -22,6 +24,23 @@ excentury uses for the given command.
 """
 
 
+class ConfigDispAction(argparse.Action):  # pylint: disable=R0903
+    """Derived argparse Action class to use when displaying the
+    configuration file and location."""
+    def __call__(self, parser, namespace, values, option_string=None):
+        try:
+            data = read_config(namespace)
+        except IOError:
+            print 'xcpp.config not found in %r' % namespace.cfg
+        else:
+            for sec in data:
+                sys.stdout.write('[%s]\n' % sec)
+                for key in data[sec]:
+                    sys.stdout.write('%s = %s\n' % (key, data[sec][key]))
+                sys.stdout.write('\n')
+        exit(0)
+
+
 def add_parser(subp, raw):
     "Add a parser to the main subparser. "
     tmpp = subp.add_parser('config', help='configure excentury',
@@ -29,10 +48,30 @@ def add_parser(subp, raw):
                            description=textwrap.dedent(DESC))
     tmpp.add_argument('var', type=str,
                       help='Must be in the form of sec.key')
-    tmpp.add_argument('value', type=str,  nargs='?', default=None,
+    tmpp.add_argument('value', type=str, nargs='?', default=None,
                       help='var value')
     tmpp.add_argument('-v', action='store_true',
                       help='print config file location')
+    tmpp.add_argument('--display', action=ConfigDispAction,
+                      nargs=0,
+                      help='print config file and exit')
+
+
+def _read_config(fname):
+    """Simple parser to read configuration files. """
+    data = OrderedDict()
+    sec = None
+    with open(fname, 'r') as fhandle:
+        for line in fhandle:
+            if line[0] == '[':
+                sec = line[1:-2]
+                data[sec] = OrderedDict()
+            elif '=' in line:
+                tmp = line.split('=', 1)
+                key = tmp[0].strip()
+                val = tmp[1].strip()
+                data[sec][key] = val
+    return data
 
 
 def read_config(arg):
@@ -46,15 +85,18 @@ def read_config(arg):
     elif not os.path.exists('%s/xcpp.config' % path):
         error("ERROR: %s/xcpp.config does not exist\n" % path)
     arg.cfg = path
-    config = configparser.ConfigParser(allow_no_value=True)
-    config.read('%s/xcpp.config' % path)
+    config = _read_config('%s/xcpp.config' % path)
     return config
 
 
-def write_config(config, arg):
+def write_config(data, arg):
     """Write the configuration file. """
-    with open('%s/xcpp.config' % arg.cfg, 'w') as cfile:
-        config.write(cfile)
+    with open('%s/xcpp.config' % arg.cfg, 'w') as fhandle:
+        for sec in data:
+            fhandle.write('[%s]\n' % sec)
+            for key in data[sec]:
+                fhandle.write('%s = %s\n' % (key, data[sec][key]))
+            fhandle.write('\n')
 
 
 def run(arg):
@@ -75,7 +117,7 @@ def run(arg):
     try:
         config[command][var] = arg.value
     except KeyError:
-        config.add_section(command)
+        config[command] = OrderedDict()
         config[command][var] = arg.value
     write_config(config, arg)
 

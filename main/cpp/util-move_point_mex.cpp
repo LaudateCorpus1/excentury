@@ -1,4 +1,5 @@
-// File generated on Wed Jan 22, 2014 02:27:58 AM by xcpp.
+// File generated on Wed Apr 09, 2014 04:03:57 PM by xcpp.
+#define XC_MATLAB
 #include "mex.h"
 #include <excentury/excentury.h>
 #include <objects.h>

@@ -1,4 +1,5 @@
-// File generated on Wed Jan 22, 2014 02:28:02 AM by xcpp.
+// File generated on Wed Apr 09, 2014 04:04:04 PM by xcpp.
+#define XC_MATLAB
 #include "mex.h"
 #include <excentury/excentury.h>
 #include <objects.h>
@@ -9,11 +10,11 @@ void mexFunction(int nlhs, mxArray *plhs[],
     size_t ncin_ = mxGetScalar(prhs[0]);
     char* pcin_ = mxArrayToString(prhs[1]);
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin_, ncin_);
-    excentury::dynamicTensor<1, double, 0, 1> v; XC_LI_.load(v, v[0]);
+    excentury::DynamicTensor<1, double, 0, 1> v; XC_LI_.load(v, v[0]);
     double s; XC_LI_.load(s);
     XC_LI_.close();
 
-    for (int i=0; i < v.dim(); ++i) {
+    for (unsigned int i=0; i < v.dim(); ++i) {
         v[i] *= s;
     }
 

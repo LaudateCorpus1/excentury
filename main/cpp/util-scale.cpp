@@ -1,4 +1,4 @@
-// File generated on Wed Jan 22, 2014 02:27:29 AM by xcpp.
+// File generated on Wed Apr 09, 2014 04:04:10 PM by xcpp.
 #include <excentury/excentury.h>
 #include <excentury/hook/cpp.h>
 #include <objects.h>
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     double alpha; XC_LI_.load(alpha);
     XC_LI_.close();
 
-    for (int i=0; i < v.size(); ++i) {
+    for (unsigned int i=0; i < v.size(); ++i) {
         v[i] *= alpha;
     }
 

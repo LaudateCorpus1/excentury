@@ -1,9 +1,7 @@
-// File generated on Wed Jan 22, 2014 01:33:34 AM by xcpp.
+// File generated on Mon Apr 07, 2014 01:31:32 AM by xcpp.
 //Comment before inclusion of excentury
 #include <excentury/excentury.h>
 #include <excentury/hook/cpp.h>
-#include <excentury/tools/reporter.h>
-#include <excentury/tools/rand.h>
 //Comment for test_rep
 void xc_help() {
     fprintf(stderr,
@@ -31,12 +29,12 @@ int main(int argc, char** argv) {
 
     int a = 0;
     printf("A = %d\n", a);
-    class sim_reporter: public excentury::reporter {
+    class sim_reporter: public excentury::Reporter {
     public:
         const int& a;
         sim_reporter(int& a_):
             a(a_),
-            excentury::reporter(10, stdout)
+            excentury::Reporter(10, stdout)
         {}
         void report() {
             fprintf(fp, "Value of a = %d\n", this->a);

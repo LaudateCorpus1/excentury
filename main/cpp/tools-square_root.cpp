@@ -1,9 +1,7 @@
-// File generated on Fri Jan 24, 2014 12:01:33 AM by xcpp.
+// File generated on Mon Apr 07, 2014 01:31:30 AM by xcpp.
 //Comment before inclusion of excentury
 #include <excentury/excentury.h>
 #include <excentury/hook/cpp.h>
-#include <excentury/tools/reporter.h>
-#include <excentury/tools/rand.h>
 //Comment for square_root
 void xc_help() {
     fprintf(stderr,

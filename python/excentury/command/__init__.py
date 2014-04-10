@@ -6,7 +6,6 @@ excentury.
 """
 
 import sys
-from dateutil import parser
 from datetime import datetime
 from subprocess import Popen, PIPE
 
@@ -45,9 +44,6 @@ def exec_cmd(cmd, verbose=False):
 
 def date(short=False):
     "Return the current date as a string. "
-    if isinstance(short, str):
-        now = parser.parse(short)
-        return now.strftime("%a %b %d, %Y %r")
     now = datetime.now()
     if not short:
         return now.strftime("%a %b %d, %Y %r")

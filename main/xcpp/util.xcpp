@@ -65,7 +65,7 @@ compatible with python and cpp.
     @param{std::vector<double>, v, "the vector to multiply. ", v[0]}
     @param{double, alpha, "the scalar."}
 @body[[
-    for (int i=0; i < v.size(); ++i) {
+    for (unsigned int i=0; i < v.size(); ++i) {
         v[i] *= alpha;
     }
 ]]
@@ -118,7 +118,7 @@ compatible with python and cpp.
            "the array to be scaled.", v[0]}
     @param{double, s, "the scalar factor."}
 @body[[
-    for (int i=0; i < v.dim(); ++i) {
+    for (unsigned int i=0; i < v.dim(); ++i) {
         v[i] *= s;
     }
 ]]
