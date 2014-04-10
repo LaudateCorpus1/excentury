@@ -9,6 +9,7 @@ import sys
 from subprocess import Popen, PIPE
 from nose.tools import eq_
 
+
 def exec_cmd(cmd, verbose=False):
     "Run a subprocess and return its output and errors. "
     if verbose:
@@ -17,9 +18,12 @@ def exec_cmd(cmd, verbose=False):
     else:
         out = PIPE
         err = PIPE
-    process = Popen(cmd, shell=True, stdout=out, stderr=err)
+    process = Popen(cmd, shell=True,
+                    universal_newlines=True, executable="/bin/bash",
+                    stdout=out, stderr=err)
     out, err = process.communicate()
     return out, err, process.returncode
+
 
 def build_cpp(name, debug=None):
     """Compile a file and place it in bin. """
@@ -28,10 +32,11 @@ def build_cpp(name, debug=None):
         out = '-o %s/main/bin/%s.run' % (root, name)
     else:
         out = '-DDEBUG=%s -o %s/main/bin/%s.run%s' % (debug, root,
-                                                 name, debug)
+                                                      name, debug)
     cmd = 'g++ -O3 %s %s/main/cpp/%s.cpp' % (out, root, name)
     out, err, _ = exec_cmd(cmd)
     eq_(err, "", "Build Error -->\n%s\n%s" % (cmd, err))
+
 
 def run_cmd(cmd, exp_err, exp_out):
     """Run a command and compare the expected output and error."""
@@ -46,6 +51,7 @@ def run_cmd(cmd, exp_err, exp_out):
                                          cmd, hline, exp_out, hline)
     eq_(out, exp_out, msg)
 
+
 def build_run(prog, exp_err, exp_out, debug=None):
     """Build and run. """
     build_cpp(prog, debug)
@@ -54,6 +60,7 @@ def build_run(prog, exp_err, exp_out, debug=None):
     else:
         cmd = '%s.run%d' % (prog, debug)
     run_cmd(cmd, exp_err, exp_out)
+
 
 def str_eq(str1, str2):
     """Compare two strings. """

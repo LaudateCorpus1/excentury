@@ -1,10 +1,7 @@
-# Excentury
+# [Excentury](http://jmlopez-rod.github.io/excentury/)
 
-Excentury is a collection of header files designed for
-interoperability. It was born out of the necessity to exchange data
-between programs written in C++ and MATLAB. Due to its data exchange
-protocol it is possible make C++ code interact with scripting
-languages such as Python, and MATLAB.
+A set of libraries written in C++ that enables easy integration of
+C++ code into Python and MATLAB projects.
 
 ## Installation
 
