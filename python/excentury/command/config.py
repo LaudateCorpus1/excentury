@@ -85,7 +85,10 @@ def read_config(arg):
     elif not os.path.exists('%s/xcpp.config' % path):
         error("ERROR: %s/xcpp.config does not exist\n" % path)
     arg.cfg = path
-    config = _read_config('%s/xcpp.config' % path)
+    try:
+        config = _read_config('%s/xcpp.config' % path)
+    except IOError:
+        config = OrderedDict()
     return config
 
 
