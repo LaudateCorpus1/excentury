@@ -62,7 +62,7 @@ public:
     void data(T& object_) {
         char msg[500];
         sprintf(msg, "STextInterface<dump>::data: overload not found\n"
-                "    data overload not found for object %s of type '%c'", 
+                "    data overload not found for object '%s' of type '%c'", 
                 type_name(object_), type(object_));
         excentury::error(msg);
     }
@@ -218,7 +218,7 @@ public:
     void data(T& object_) {
         char msg[500];
         sprintf(msg, "STextInterface<load>::data: overload not found\n"
-                "    data overload not found for object %s of type '%c'", 
+                "    data overload not found for object '%s' of type '%c'", 
                 type_name(object_), type(object_));
         excentury::error(msg);
     }

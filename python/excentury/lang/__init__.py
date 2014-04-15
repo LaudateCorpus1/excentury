@@ -376,11 +376,15 @@ def gen_cmd(cfg, lang, debug=None):
             dbg = '-DDEBUG=%s ' % cfg[lang]['debug']
     else:
         dbg = '-DDEBUG=%d ' % debug
-    inc = ['-I%s/%s' % (root, item) for item in cfg[lang]['cxxinc'].split(':')]
+    tmpl = [i if i[0:1] != '/' else os.path.join(root, i)
+            for i in cfg[lang].get('cxxinc', '').split(':')]
+    inc = ['-I%s' % i for i in tmpl]
     inc = ' '.join(inc)
     if inc != '':
         inc = '%s ' % inc
-    lib = ['-L%s/%s' % (root, item) for item in cfg[lang]['cxxlib'].split(':')]
+    tmpl = [i if i[0:1] != '/' else os.path.join(root, i)
+            for i in cfg[lang].get('cxxlib', '').split(':')]
+    lib = ['-L%s' % i for i in tmpl]
     lib = ' '.join(lib)
     if lib != '':
         lib = '%s ' % lib
@@ -397,9 +401,9 @@ def gen_input_file(xcfile, filename):
 {preamble}{funcpre}
 int main() {{
     excentury::TextInterface<excentury::dump_mode> XC_DI_(stdout);
-%s    XC_DI_.close();
+{tmp}    XC_DI_.close();
 }}
-""".format(date=date(), pre_xc=xcfile.pre_xc,
+""".format(date=date(), pre_xc=xcfile.pre_xc, tmp='{XC-INPUTS}',
            preamble=xcfile.preamble, funcpre=funcpre)
     var = dict()
     num = 1
@@ -424,7 +428,7 @@ int main() {{
     fname = 'inputs-%s.cpp' % filename
     trace('+ writing temporary file %s ... ' % fname)
     with open(fname, 'w') as tmp:
-        tmp.write(cont % inputs)
+        tmp.write(cont.replace('{XC-INPUTS}', inputs))
     trace('done\n')
     return fname, var
 

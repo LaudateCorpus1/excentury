@@ -1,0 +1,63 @@
+"""Armadillo Test
+
+Collection of sample functions showing how to use the
+[Armadillo](http://arma.sourceforge.net/) library.
+
+"""
+[[
+#include <armadillo>
+]]
+
+
+namespace excentury {
+XC_DUMP_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m, m.mem[0]) {
+    size_t ndims = 2;
+    unsigned char rm = 0;
+    XC_BYTE(rm);
+    XC_SIZE(ndims);
+    size_t size = m.n_elem;
+    size_t dim[2] = {m.n_rows, m.n_cols};
+    XC_ARRAY(dim, ndims);
+    XC_ARRAY(m.mem, size);
+}
+XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
+    size_t ndims;
+    unsigned char rm;
+    XC_BYTE(rm);
+    if (rm != 0) {
+        char msg[500];
+        sprintf(msg, "Armadillo Mat::load:\n"
+                "    RM mismatch, got %d, needs %d.", rm, 0);
+        excentury::error(msg);
+    }
+    XC_SIZE(ndims);
+    if (ndims != 2) {
+        char msg[500];
+        sprintf(msg, "Armadillo Mat::load:\n"
+                "    dimension mismatch, needs dim = %d", 2);
+        excentury::error(msg);
+    }
+    size_t* dim = new size_t[ndims];
+    XC_ARRAY(dim, ndims);
+    m.resize(dim[0], dim[1]);
+    elementType* mem = const_cast<elementType*>(m.mem);
+    XC_ARRAY(mem, m.n_elem);
+    delete [] dim;
+}
+}
+
+
+----------------------------------------------------------------------
+@def{ex1}
+    """Armadillo example 2: Computes the determinant and inverse of a
+    matrix. """
+    @param{arma::mat, A(2, 2), "input matrix", A(0,0)}
+@body[[
+    double d = det(A);
+    arma::mat Ainv = inv(A);
+]]
+@ret[[
+    @ret{d, "detA"}
+    @ret{Ainv, "Ainv", Ainv(0,0)}
+]]
+----------------------------------------------------------------------
