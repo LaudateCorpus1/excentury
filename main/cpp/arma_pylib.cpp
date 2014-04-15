@@ -1,4 +1,4 @@
-// File generated on Tue Apr 15, 2014 11:56:23 AM by xcpp.
+// File generated on Tue Apr 15, 2014 12:46:50 PM by xcpp.
 /*Armadillo Test
 
 Collection of sample functions showing how to use the
@@ -57,7 +57,12 @@ try {
     XC_LI_.close();
 
     double d = det(A);
-    arma::mat Ainv = inv(A);
+    arma::mat Ainv;
+    try {
+        Ainv = inv(A);
+    } catch (std::runtime_error& run_error) {
+        excentury::error(run_error.what());
+    }
 
     excentury::STextInterface<excentury::dump_mode> XC_DI_;
     XC_DI_.dump(d, "detA");

@@ -54,7 +54,12 @@ XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
     @param{arma::mat, A(2, 2), "input matrix", A(0,0)}
 @body[[
     double d = det(A);
-    arma::mat Ainv = inv(A);
+    arma::mat Ainv;
+    try {
+        Ainv = inv(A);
+    } catch (std::runtime_error& run_error) {
+        excentury::error(run_error.what());
+    }
 ]]
 @ret[[
     @ret{d, "detA"}

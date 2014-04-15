@@ -1,7 +1,8 @@
-// File generated on Tue Apr 15, 2014 12:46:38 PM by xcpp.
+// File generated on Tue Apr 15, 2014 12:50:47 PM by xcpp.
+#define XC_MATLAB
+#include "mex.h"
 #include <armadillo>
 #include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
 namespace excentury {
 XC_DUMP_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m, m.mem[0]) {
     size_t ndims = 2;
@@ -38,29 +39,12 @@ XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
     delete [] dim;
 }
 }
-void xc_help() {
-    fprintf(stderr,
-    "program: arma-ex1\n"
-    "\ndescription:\n"
-    "    Armadillo example 2: Computes the determinant and inverse of a\n"
-    "    matrix.\n"
-    "\nparameters:\n"
-    "    `A`: input matrix\n"
-    "\n");
-}
-void xc_input() {
-    xc_help();
-    excentury::TextInterface<excentury::dump_mode> XC_DI_(stdout);
-    arma::mat A(2, 2); XC_DI_.dump(A, "A", A(0,0));
-    XC_DI_.close();
-}
-int main(int argc, char** argv) {
-    /*Armadillo example 2: Computes the determinant and inverse of a
-    matrix.*/
-    excentury::check_inputs(argc);
-    excentury::print_help(argv, xc_help);
-    excentury::print_inputs(argv, xc_input);
-    excentury::STextInterface<excentury::load_mode> XC_LI_(argv[1]);
+void mexFunction(int nlhs, mxArray *plhs[],
+                 int nrhs, const mxArray *prhs[])
+{
+    size_t ncin_ = mxGetScalar(prhs[0]);
+    char* pcin_ = mxArrayToString(prhs[1]);
+    excentury::STextInterface<excentury::load_mode> XC_LI_(pcin_, ncin_);
     arma::mat A(2, 2); XC_LI_.load(A, A(0,0));
     XC_LI_.close();
 
@@ -72,9 +56,14 @@ int main(int argc, char** argv) {
         excentury::error(run_error.what());
     }
 
-    excentury::TextInterface<excentury::dump_mode> XC_DI_(stdout);
+    excentury::STextInterface<excentury::dump_mode> XC_DI_;
     XC_DI_.dump(d, "detA");
     XC_DI_.dump(Ainv, "Ainv", Ainv(0, 0));
     XC_DI_.close();
+    std::string xc_mex_str_ = XC_DI_.str();
+    plhs[0] = mxCreateDoubleMatrix(1, 1, mxREAL);
+    double* ncout_ = mxGetPr(plhs[0]);
+    ncout_[0] = xc_mex_str_.size();
+    plhs[1] = mxCreateString(xc_mex_str_.data());
+    mxFree(pcin_);
 }
-

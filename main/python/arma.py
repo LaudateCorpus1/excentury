@@ -1,4 +1,4 @@
-# File generated on Tue Apr 15, 2014 11:14:30 AM by xcpp.
+# File generated on Tue Apr 15, 2014 12:46:54 PM by xcpp.
 """Armadillo Test
 
 Collection of sample functions showing how to use the
@@ -20,11 +20,12 @@ def xc_struct(name):
 LIB.ex1_py.restype = None
 LIB.ex1_py_clear.restype = None
 def ex1(A, unpack=True):
-    """Armadillo example 1
+    """Armadillo example 2: Computes the determinant and inverse of a
+    matrix.
 
     parameters:
 
-      `A`: Input Matrix
+      `A`: input matrix
     """
     tdump = TextDumper()
     tdump.dump(A, "A", ['T', ['R', '8']])
