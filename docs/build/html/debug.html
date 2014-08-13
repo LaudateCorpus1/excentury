@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Debugging &mdash; excentury 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="excentury 0.2 documentation" href="index.html" />
+    <link rel="prev" title="Installing Excentury" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="Installing Excentury"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">excentury 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="debugging">
+<span id="id1"></span><h1>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h1>
+<p>Writing C++ routines is no easy task. Many times a program ends
+abrutly with an error. A common error is a &#8220;<em>segmentation fault</em>&#8221;
+error. When a program displays this message it usually means that the
+program was trying to access a memory location outside its address
+space. Many other errors may occurr but finding these errors is
+usually a time consuming task and several debugging techniques are
+needed to find them.</p>
+<p>A common debugging technique is to print messages on your program so
+that you may debug or trace the execution of the program. Excentury
+provides three macro functions to aid in future debugging tasks.
+These functions expand to a command if the <tt class="docutils literal"><span class="pre">DEBUG</span></tt> macro is defined
+before the inclusion of <tt class="docutils literal"><span class="pre">excentury.h</span></tt>. There are three values that
+the <tt class="docutils literal"><span class="pre">DEBUG</span></tt> macro can take. These three values are the several
+levels of debugging which can facilitate the debugging task at hand
+and in the future.</p>
+<p>To explore what each of these levels do we will consider the file
+<tt class="docutils literal"><span class="pre">example.cpp</span></tt> which looks as follows</p>
+<div class="highlight-cpp"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include &lt;excentury/excentury.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">debug</span><span class="p">(</span><span class="s">&quot;This message is only seen with DEBUG set to 2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">trace</span><span class="p">(</span><span class="s">&quot;This message is only seen with DEBUG set to 3</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">exitif</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="s">&quot;This is a test to check that DEBUG is on.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Debug was turned off...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>Notice that a compilation without defining the <tt class="docutils literal"><span class="pre">DEBUG</span></tt> macro will result
+in the following</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>g++ example.cpp -o example.run
+<span class="nv">$ </span>./example.run
+Hello world
+Debug was turned off...
+</pre></div>
+</div>
+<p>This is because <tt class="docutils literal"><span class="pre">debug</span></tt>, <tt class="docutils literal"><span class="pre">trace</span></tt> and <tt class="docutils literal"><span class="pre">exitif</span></tt> expanded to
+nothing, <em>i.e.</em>, <tt class="docutils literal"><span class="pre">example.cpp</span></tt> expanded to</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;excentury/excentury.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Debug was turned off...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="debugging-level-1-exitif">
+<h2>Debugging Level 1: <tt class="docutils literal"><span class="pre">exitif</span></tt><a class="headerlink" href="#debugging-level-1-exitif" title="Permalink to this headline">¶</a></h2>
+<p>This is the most basic level and it will allow you to use the
+<tt class="docutils literal"><span class="pre">exitif</span></tt> function.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">exitif</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">function_call</span><span class="p">,</span> <span class="p">...)</span>
+</pre></div>
+</div>
+<p>This is a macro which expands to the following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(...);</span>
+    <span class="n">function_call</span><span class="p">;</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To can either define <tt class="docutils literal"><span class="pre">DEBUG</span></tt> before inclusion of
+<tt class="docutils literal"><span class="pre">excentury/excentury.h</span></tt> or define it during the call to <tt class="docutils literal"><span class="pre">g++</span></tt></p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>g++ -DDEBUG<span class="o">=</span>1 example.cpp -o example.run1
+<span class="nv">$ </span>./example.run1
+Hello world
+ERROR CAUGHT BY example.cpp line 7 executing:
+
+    int main<span class="o">()</span>
+
+The error occurred because:  <span class="nb">true</span>
+
+This is a <span class="nb">test </span>to check that DEBUG is on.
+</pre></div>
+</div>
+<p>In this case, notice that since <tt class="docutils literal"><span class="pre">exitif</span></tt> was defined and the
+condition to exit was satisfied (any statement that evalutes to
+<tt class="docutils literal"><span class="pre">true</span></tt>) the program printed a statement explaining the error
+detected and halted the execution of the program.</p>
+</div>
+<div class="section" id="debugging-level-2-debug">
+<h2>Debugging Level 2: <tt class="docutils literal"><span class="pre">debug</span></tt><a class="headerlink" href="#debugging-level-2-debug" title="Permalink to this headline">¶</a></h2>
+<p>This level provides the function <tt class="docutils literal"><span class="pre">debug</span></tt>. These messages should
+only be used while debuging. If the messages could help in the future
+then we should replace <tt class="docutils literal"><span class="pre">debug</span></tt> with the level 3 function <tt class="docutils literal"><span class="pre">trace</span></tt>.
+The <tt class="docutils literal"><span class="pre">debug</span></tt> function behaves as <tt class="docutils literal"><span class="pre">printf</span></tt> but will only be
+expanded in levels 2 and 3.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>g++ -DDEBUG<span class="o">=</span>2 example.cpp -o example.run2
+<span class="nv">$ </span>./example.run2
+This message is only seen with DEBUG <span class="nb">set </span>to 2
+Hello world
+ERROR CAUGHT BY example.cpp line 7 executing:
+
+    int main<span class="o">()</span>
+
+The error occurred because:  <span class="nb">true</span>
+
+This is a <span class="nb">test </span>to check that DEBUG is on.
+</pre></div>
+</div>
+<p>Notice the message from level 1 was displayed as well as the message
+provided to the <tt class="docutils literal"><span class="pre">debug</span></tt> function. Again, these messages are meant
+to be temporary in order to find out what is going on. We could have
+used the <tt class="docutils literal"><span class="pre">printf</span></tt> function but soon we will not be able to
+differentiate between the actual statements that we want to display
+and those that were temporary debugging messages.</p>
+</div>
+<div class="section" id="debugging-level-3-trace">
+<h2>Debugging Level 3: <tt class="docutils literal"><span class="pre">trace</span></tt><a class="headerlink" href="#debugging-level-3-trace" title="Permalink to this headline">¶</a></h2>
+<p>Provides the function <tt class="docutils literal"><span class="pre">trace</span></tt> which will display messages when
+level 3 is active. These messages are meant to be permanent messages
+and should be designed to help the user have a better idea of what is
+going on with the program.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>g++ -DDEBUG<span class="o">=</span>3 example.cpp -o example.run3
+<span class="nv">$ </span>./example.run3
+This message is only seen with DEBUG <span class="nb">set </span>to 2
+This message is only seen with DEBUG <span class="nb">set </span>to 3
+Hello world
+ERROR CAUGHT BY example.cpp line 7 executing:
+
+    int main<span class="o">()</span>
+
+The error occurred because:  <span class="nb">true</span>
+
+This is a <span class="nb">test </span>to check that DEBUG is on.
+</pre></div>
+</div>
+<p>The debugging level 3 is really meant to be used as a last resort
+tool. If done correctly, the debugging level 1 should catch the
+errors. If this is not enough then we may display messages by using
+level 2. If all fails then we may want to activate the <tt class="docutils literal"><span class="pre">trace</span></tt>
+messages to see if there are any useful messages.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Debugging</a><ul>
+<li><a class="reference internal" href="#debugging-level-1-exitif">Debugging Level 1: <tt class="docutils literal"><span class="pre">exitif</span></tt></a></li>
+<li><a class="reference internal" href="#debugging-level-2-debug">Debugging Level 2: <tt class="docutils literal"><span class="pre">debug</span></tt></a></li>
+<li><a class="reference internal" href="#debugging-level-3-trace">Debugging Level 3: <tt class="docutils literal"><span class="pre">trace</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installing Excentury</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/debug.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="Installing Excentury"
+             >previous</a> |</li>
+        <li><a href="index.html">excentury 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Manuel Lopez.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
