@@ -1,8 +1,7 @@
 /** STEXTINTERFACE.H
 % Author: Manuel Lopez <jmlopez.rod@gmail.com>
-% License: http://creativecommons.org/licenses/by-sa/3.0/
-% Date Created: November 24, 2012
-% Last Modified: November 24, 2013
+% License: BSD License
+% Nov 24, 2012 -- Aug 13, 2014
 */
  
 #ifdef XC_STEXTINTERFACE_DEBUG
@@ -11,6 +10,39 @@
 #endif 
 
 namespace excentury {
+
+/* RawCharBuffer and RawCharIStream are structures taken from
+    
+    http://stackoverflow.com/a/25293932/788553
+
+Author: David Godfrey <http://careers.stackoverflow.com/DavidGodfrey>
+*/
+struct RawCharBuffer: std::streambuf {
+private:
+    std::vector<char> buffer;
+public:
+    explicit RawCharBuffer() {}
+    explicit RawCharBuffer(const char* const begin,
+                           const char* const end): buffer(begin, end)
+    {
+        this->setg(buffer.data(), buffer.data(),
+                   buffer.data() + buffer.size());
+    }
+    void assign(const char* const begin, size_t len) {
+        buffer.assign(begin, begin+len);
+        this->setg(buffer.data(), buffer.data(),
+                   buffer.data() + buffer.size());
+    }
+};
+struct RawCharIStream: virtual RawCharBuffer, std::istream {
+    explicit RawCharIStream(): std::istream(this) {}
+    explicit RawCharIStream(const char* const begin, size_t len):
+        RawCharBuffer(begin, begin+len), std::istream(this) {}
+    
+    std::string str() const {
+        return std::string(this->eback(), this->egptr());
+    }
+};
 
 template<mode m>
 class STextInterface: public Communicator< STextInterface<m> > {
@@ -147,12 +179,12 @@ public:
 template<>
 class STextInterface<load_mode>: public XC_COM_LM {
 public:
-    std::istringstream iss;
+    RawCharIStream iss; // Alternative is to use std::istringstream
     std::string tmp_str;
     size_t tmp_size;
 
     STextInterface(): XC_COM_LM(*this) {}
-    STextInterface(const char* s): XC_COM_LM(*this), iss(s) {
+    STextInterface(const char* s): XC_COM_LM(*this) {
         open(s);
     }
     STextInterface(const char* s, size_t l): XC_COM_LM(*this) {
@@ -161,15 +193,17 @@ public:
     void open(const char* s) {
         trace("STextInterface<load>::open(s)\n");
         if (!empty()) close();
-        iss.clear();
-        iss.str(s);
+        //iss.clear();
+        //iss.str(s);
+        iss.assign(s, strlen(s));
     }
     void open(const char* s, size_t l) {
         trace("STextInterface<load>.open(s, l)\n");
         if (!empty()) close();
-        iss.clear();
-        iss.str(s);
-        //iss.rdbuf()->pubsetbuf((char*)s, l);
+        //iss.clear();
+        //iss.rdbuf()->pubsetbuf((char*)s, l); //May not be implemented
+        //iss.str(s); // Same as in open
+        iss.assign(s, l);
     }
     void close() {
         trace("STextInterface<load>::close()\n");

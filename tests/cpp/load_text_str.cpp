@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     std::vector<Point> array_obj;
     std::vector<double> tensor_obj;
     
-    xc::STextInterface<xc::load_mode> text_obj(argv[1]);
+    xc::STextInterface<xc::load_mode> text_obj(argv[1], strlen(argv[1]));
     #define LOAD(v) text_obj.load(v)
     LOAD(v_char);
     LOAD(v_byte);
