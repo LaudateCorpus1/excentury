@@ -380,14 +380,18 @@ def gen_cmd(cfg, lang, debug=None):
             for i in cfg[lang].get('cxxinc', '').split(':')]
     inc = ['-I%s' % i for i in tmpl]
     inc = ' '.join(inc)
-    if inc != '':
+    if inc != '-I':
         inc = '%s ' % inc
+    else:
+        inc = ''
     tmpl = [i if i[0:1] != '/' else os.path.join(root, i)
             for i in cfg[lang].get('cxxlib', '').split(':')]
     lib = ['-L%s' % i for i in tmpl]
     lib = ' '.join(lib)
-    if lib != '':
+    if lib != '-L':
         lib = '%s ' % lib
+    else:
+        lib = ''
     return '%s %s%s%s%s' % (cxx, dbg, opt, inc, lib)
 
 
