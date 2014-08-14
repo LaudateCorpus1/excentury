@@ -1,5 +1,5 @@
 recursive-include bin *
-recursive-include excentury *.py *.m
+recursive-include excentury *.py *.m *.h
 recursive-include docs *
 include setup.py
 include LICENSE.rst

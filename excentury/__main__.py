@@ -101,20 +101,21 @@ command for more information.
     epi = """
 shortcuts:
 
-    xcpp file.xcpp lang <==> xcpp fle.xcpp to lang
-    xcpp file.xc <==> xcpp file.xc view
+    excentury file.xcpp lang <==> xcpp fle.xcpp to lang
+    excentury file.xc <==> xcpp file.xc view
 
-More info:
-  http://jmlopez-rod.github.com/excentury
+more info:
+  http://excentury.readthedocs.org
 
-Version:
-  This is excentury version %s
+version:
+  excentury %s
 
 """ % VERSION
     raw = argparse.RawDescriptionHelpFormatter
-    argp = argparse.ArgumentParser(formatter_class=raw, version=ver,
+    argp = argparse.ArgumentParser(formatter_class=raw,
                                    description=textwrap.dedent(desc),
                                    epilog=textwrap.dedent(epi))
+    argp.add_argument('-v', '--version', action='version', version=ver)
     argp.add_argument('inputfile', type=str, default='_', nargs='?',
                       help='input file to process').completer = valid_files
     argp.add_argument('--cfg', type=str, default='.',
@@ -124,8 +125,7 @@ Version:
                                help='additional help',
                                metavar="<command>")
 
-    names = mod.keys()
-    names.sort()
+    names = sorted(mod.keys())
     for name in names:
         mod[name].add_parser(subp, raw)
     try:
