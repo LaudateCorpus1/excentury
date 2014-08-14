@@ -8,36 +8,24 @@ version_info conforms to PEP 386
 
 """
 
-import os
+VERSION_INFO = (0, 2, 0, 'beta', 0)
 
 
-def read_info():
-    """Read the excentury version located at the root folder. """
-    ver = os.path.join(os.path.dirname(__file__), '..', '..', 'version')
-    ver = open(ver, 'r').read().strip()
-    ver = ver.split(':')
-    ver[0] = int(ver[0])
-    ver[1] = int(ver[1])
-    ver[2] = int(ver[2])
-    ver[4] = int(ver[4])
-    return ver
-
-
-def get_version(version_info):
+def get_version():
     """Return a PEP-386 compliant version number from version_info."""
-    assert len(version_info) == 5
-    assert version_info[3] in ('alpha', 'beta', 'rc', 'final')
+    assert len(VERSION_INFO) == 5
+    assert VERSION_INFO[3] in ('alpha', 'beta', 'rc', 'final')
 
-    parts = 2 if version_info[2] == 0 else 3
-    main = '.'.join([str(part) for part in version_info[:parts]])
+    parts = 2 if VERSION_INFO[2] == 0 else 3
+    main = '.'.join([str(part) for part in VERSION_INFO[:parts]])
 
     sub = ''
-    if version_info[3] == 'alpha' and version_info[4] == 0:
+    if VERSION_INFO[3] == 'alpha' and VERSION_INFO[4] == 0:
         sub = '.dev'
-    elif version_info[3] != 'final':
+    elif VERSION_INFO[3] != 'final':
         mapping = {'alpha': 'a', 'beta': 'b', 'rc': 'c'}
-        sub = mapping[version_info[3]] + str(version_info[4])
+        sub = mapping[VERSION_INFO[3]] + str(VERSION_INFO[4])
 
     return str(main + sub)
 
-VERSION = get_version(read_info())
+VERSION = get_version()
