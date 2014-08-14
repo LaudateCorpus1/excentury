@@ -1,4 +1,4 @@
-// File generated on Wed Aug 13, 2014 10:47:25 PM by xcpp.
+// File generated on Wed Aug 13, 2014 11:04:55 PM by xcpp.
 /*Tools
 
 This collection of functions are examples of how to use the objects
@@ -49,8 +49,9 @@ try {
     ncout = square_root_py_str.size();
     pcout = (char*)square_root_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    square_root_py_str = run_error.msg;
+    ncout = square_root_py_str.size();
+    pcout = (char*)square_root_py_str.data();
 }
 }
 void square_root_py_clear() {
@@ -81,8 +82,9 @@ try {
     ncout = rand_array_py_str.size();
     pcout = (char*)rand_array_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    rand_array_py_str = run_error.msg;
+    ncout = rand_array_py_str.size();
+    pcout = (char*)rand_array_py_str.data();
 }
 }
 void rand_array_py_clear() {
@@ -128,8 +130,9 @@ try {
     ncout = test_rep_py_str.size();
     pcout = (char*)test_rep_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    test_rep_py_str = run_error.msg;
+    ncout = test_rep_py_str.size();
+    pcout = (char*)test_rep_py_str.data();
 }
 }
 void test_rep_py_clear() {
@@ -165,8 +168,9 @@ try {
     ncout = sin_vector_py_str.size();
     pcout = (char*)sin_vector_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    sin_vector_py_str = run_error.msg;
+    ncout = sin_vector_py_str.size();
+    pcout = (char*)sin_vector_py_str.data();
 }
 }
 void sin_vector_py_clear() {

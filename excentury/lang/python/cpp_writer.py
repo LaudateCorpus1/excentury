@@ -23,8 +23,9 @@ try {{
     ncout = {name}_py_str.size();
     pcout = (char*){name}_py_str.data();
 }} catch (excentury::RuntimeError& run_error) {{
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    {name}_py_str = run_error.msg;
+    ncout = {name}_py_str.size();
+    pcout = (char*){name}_py_str.data();
 }}
 }}
 void {name}_py_clear() {{
