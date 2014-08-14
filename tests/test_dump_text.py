@@ -10,7 +10,7 @@ For a single test:
 
 """
 
-from build import run_cmd, str_eq, build_run
+from tests import run_cmd, str_eq, build_run
 
 MATLAB_FILE_CONTENT = """2
 Point x R 8 y R 8 

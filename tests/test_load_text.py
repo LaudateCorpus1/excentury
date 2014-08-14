@@ -11,7 +11,7 @@ For a single test:
 """
 
 import os
-from build import run_cmd, build_run, build_cpp, str_eq
+from tests import run_cmd, build_run, build_cpp, str_eq
 
 MATLAB_EXP_OUT = """array_obj =     [1x1 Point]    [1x1 Point]
 

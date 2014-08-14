@@ -11,13 +11,15 @@ For a single test:
 """
 
 import os
-from build import build_run
+from tests import build_run
+
 
 def test_nodebug():
     """debug.run: """
     exp_err = ""
     exp_out = """Hello world\nDebug was turned off...\n"""
     build_run('debug', exp_err, exp_out)
+
 
 def test_debug1():
     """debug.run1: """
@@ -30,6 +32,7 @@ line \x1b[1m7\x1b[0m executing: \n\n    \x1b[1mint main()\n\n\
 on.\n\x1b[0m""" % os.path.dirname(__file__)
     build_run('debug', exp_err, exp_out, 1)
 
+
 def test_debug2():
     """debug.run2: """
     exp_out = """Hello world\n"""
@@ -41,6 +44,7 @@ line \x1b[1m7\x1b[0m executing: \n\n    \x1b[1mint main()\n\n\
 \x1b[0m\n\n\x1b[1mThis is a test to check that DEBUG is \
 on.\n\x1b[0m""" % os.path.dirname(__file__)
     build_run('debug', exp_err, exp_out, 2)
+
 
 def test_debug3():
     """debug.run3: """

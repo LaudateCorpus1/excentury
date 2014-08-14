@@ -6,7 +6,7 @@ To run:
 
 """
 
-from build import run_cmd, str_eq, build_run
+from tests import run_cmd, str_eq, build_run
 
 EXPECTED_OUTPUT = """       1 |        1
        2 |        2
