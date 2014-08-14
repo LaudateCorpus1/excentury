@@ -5,6 +5,7 @@ Module to make matlab communicate with cpp.
 """
 
 import os
+import site
 from excentury.command.config import get_cfg
 from excentury.lang import FileParser, check_inputs, extract_name
 from excentury.lang.matlab.cpp_writer import write_cpp_function
@@ -19,8 +20,8 @@ function wrapper that calls the executable.
 """
 
 DEFAULTS = {
-    'dir': '.',
-    'wrapper': '.',
+    'dir': site.getuserbase()+'/lib/excentury/cpp',
+    'wrapper': site.getuserbase()+'/lib/excentury/matlab',
     'dump': 'text',
     'load': 'text',
     'cxx': 'g++',

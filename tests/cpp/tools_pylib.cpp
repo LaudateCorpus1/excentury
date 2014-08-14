@@ -1,4 +1,4 @@
-// File generated on Thu Jan 30, 2014 08:04:06 AM by xcpp.
+// File generated on Wed Aug 13, 2014 10:47:25 PM by xcpp.
 /*Tools
 
 This collection of functions are examples of how to use the objects
@@ -49,10 +49,8 @@ try {
     ncout = square_root_py_str.size();
     pcout = (char*)square_root_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    square_root_py_str = run_error.msg;
     ncout = run_error.size();
-    pcout = (char*)square_root_py_str.data();
-    std::cout << "ERROR: " << run_error.c_str() << "\n";
+    pcout = (char*)run_error.c_str();
 }
 }
 void square_root_py_clear() {

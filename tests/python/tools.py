@@ -1,4 +1,4 @@
-# File generated on Wed Aug 13, 2014 04:27:46 PM by xcpp.
+# File generated on Wed Aug 13, 2014 10:52:32 PM by xcpp.
 """Tools
 
 This collection of functions are examples of how to use the objects
@@ -42,7 +42,6 @@ def square_root(x, x0, iter, unpack=True):
                        c_char_p(in_str),
                        ctypes.byref(len_out),
                        ctypes.byref(out_str))
-    print 'FIRST: %r' % out_str[:1] 
     if out_str[:1] == 'E':
         xc_error_msg = out_str[1:len_out.value]
         raise RuntimeError(xc_error_msg)

@@ -5,6 +5,7 @@ alone executables.
 
 """
 
+import site
 from excentury.command.config import get_cfg
 from excentury.lang import FileParser, check_inputs, extract_name
 from excentury.lang.cpp.aux import process_function
@@ -16,8 +17,8 @@ into a stand alone executable.
 """
 
 DEFAULTS = {
-    'dir': '.',
-    'bin': '.',
+    'dir': site.getuserbase()+'/lib/excentury/cpp',
+    'bin': site.getuserbase()+'/lib/excentury/bin',
     'ext': 'run',
     'dump': 'text',
     'load': 'text',

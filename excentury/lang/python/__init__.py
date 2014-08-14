@@ -4,6 +4,7 @@ Module to make python modules that communicate with cpp.
 
 """
 
+import site
 from excentury.command.config import get_cfg
 from excentury.lang import FileParser, check_inputs, extract_name
 from excentury.lang.python.cpp_writer import write_cpp_file
@@ -17,9 +18,9 @@ module which communicates with said library.
 """
 
 DEFAULTS = {
-    'dir': '.',
-    'lib': '.',
-    'wrapper': '.',
+    'dir': site.getuserbase()+'/lib/excentury/cpp',
+    'lib': site.getuserbase()+'/lib/excentury/lib',
+    'wrapper': site.getuserbase()+'/lib/excentury/python',
     'dump': 'text',
     'load': 'text',
     'cxx': 'g++',
