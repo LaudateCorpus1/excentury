@@ -98,7 +98,6 @@ def _compile_cpp_file(in_fname, cfg):
 FILE = """// File generated on {date} by xcpp.
 /*{doc}*/
 #define XC_PYTHON
-{pre_xc}#include <excentury/excentury.h>
 {preamble}
 extern "C" {{
 {extern}

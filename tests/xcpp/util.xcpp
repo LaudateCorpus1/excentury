@@ -4,6 +4,7 @@ This collection of functions demostrate how to create functions
 compatible with python and cpp. 
 
 """
+#include <excentury/excentury.h>
 #include <objects.h>
 
 ----------------------------------------------------------------------

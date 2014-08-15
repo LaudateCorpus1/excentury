@@ -13,7 +13,7 @@ from excentury.command import error, trace, date, exec_cmd
 from excentury.core.load_text import TextParser
 
 
-#pylint: disable=R0902, R0903
+# pylint: disable=R0902, R0903
 class Function(object):
     """Object to store a function defined in a xcpp file. """
     def __init__(self, name, num):

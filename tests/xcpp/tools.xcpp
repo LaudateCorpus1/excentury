@@ -4,9 +4,12 @@ This collection of functions are examples of how to use the objects
 in excentury/tools.
 
 """
-[[
-//Comment before inclusion of excentury
-]]
+[[/*
+Any text included in this section will be treated as a comment
+and it will not appear in any of the cpp generated files. We are
+now required to explicitly include excentury.
+*/]]
+#include <excentury/excentury.h>
 
 ----------------------------------------------------------------------
 

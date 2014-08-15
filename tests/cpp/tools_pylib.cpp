@@ -1,10 +1,9 @@
-// File generated on Wed Aug 13, 2014 11:04:55 PM by xcpp.
+// File generated on Fri Aug 15, 2014 01:41:17 AM by xcpp.
 /*Tools
 
 This collection of functions are examples of how to use the objects
 in excentury/tools.*/
 #define XC_PYTHON
-//Comment before inclusion of excentury
 #include <excentury/excentury.h>
 
 extern "C" {

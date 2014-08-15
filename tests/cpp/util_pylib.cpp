@@ -1,4 +1,4 @@
-// File generated on Wed Apr 09, 2014 04:03:46 PM by xcpp.
+// File generated on Fri Aug 15, 2014 01:50:36 AM by xcpp.
 /*Util
 
 This collection of functions demostrate how to create functions
@@ -44,8 +44,9 @@ try {
     ncout = square_py_str.size();
     pcout = (char*)square_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    square_py_str = run_error.msg;
+    ncout = square_py_str.size();
+    pcout = (char*)square_py_str.data();
 }
 }
 void square_py_clear() {
@@ -69,8 +70,9 @@ try {
     ncout = cube_py_str.size();
     pcout = (char*)cube_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    cube_py_str = run_error.msg;
+    ncout = cube_py_str.size();
+    pcout = (char*)cube_py_str.data();
 }
 }
 void cube_py_clear() {
@@ -96,8 +98,9 @@ try {
     ncout = move_point_py_str.size();
     pcout = (char*)move_point_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    move_point_py_str = run_error.msg;
+    ncout = move_point_py_str.size();
+    pcout = (char*)move_point_py_str.data();
 }
 }
 void move_point_py_clear() {
@@ -122,8 +125,9 @@ try {
     ncout = make_line_py_str.size();
     pcout = (char*)make_line_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    make_line_py_str = run_error.msg;
+    ncout = make_line_py_str.size();
+    pcout = (char*)make_line_py_str.data();
 }
 }
 void make_line_py_clear() {
@@ -150,8 +154,9 @@ try {
     ncout = scale_py_str.size();
     pcout = (char*)scale_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    scale_py_str = run_error.msg;
+    ncout = scale_py_str.size();
+    pcout = (char*)scale_py_str.data();
 }
 }
 void scale_py_clear() {
@@ -176,8 +181,9 @@ try {
     ncout = print_msg_py_str.size();
     pcout = (char*)print_msg_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    print_msg_py_str = run_error.msg;
+    ncout = print_msg_py_str.size();
+    pcout = (char*)print_msg_py_str.data();
 }
 }
 void print_msg_py_clear() {
@@ -213,8 +219,9 @@ try {
     ncout = gen_tensors_py_str.size();
     pcout = (char*)gen_tensors_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    gen_tensors_py_str = run_error.msg;
+    ncout = gen_tensors_py_str.size();
+    pcout = (char*)gen_tensors_py_str.data();
 }
 }
 void gen_tensors_py_clear() {
@@ -241,8 +248,9 @@ try {
     ncout = scale_array_py_str.size();
     pcout = (char*)scale_array_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    scale_array_py_str = run_error.msg;
+    ncout = scale_array_py_str.size();
+    pcout = (char*)scale_array_py_str.data();
 }
 }
 void scale_array_py_clear() {
