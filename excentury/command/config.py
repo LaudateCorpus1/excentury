@@ -6,6 +6,7 @@ the rest of the modules in excentury.
 """
 
 import os
+import re
 import sys
 import textwrap
 import argparse
@@ -22,6 +23,31 @@ To see the values that the configuration file can overwrite use the
 excentury uses for the given command.
 
 """
+
+RE = re.compile(r'\${(?P<key>.*?)}')
+
+
+def _replacer(*key_val):
+    """Helper function for replace.
+
+    Source: <http://stackoverflow.com/a/15221068/788553>
+    """
+    replace_dict = dict(key_val)
+    replacement_function = lambda match: replace_dict[match.group(0)]
+    pattern = re.compile("|".join([re.escape(k) for k, _ in key_val]), re.M)
+    return lambda string: pattern.sub(replacement_function, string)
+
+
+def replace(string, *key_val):
+    """Replacement of strings done in one pass. Example:
+
+        >>> replace("a < b && b < c", ('<', '&lt;'), ('&', '&amp;'))
+        'a &lt; b &amp;&amp; b &lt; c'
+
+    Source: <http://stackoverflow.com/a/15221068/788553>
+
+    """
+    return _replacer(*key_val)(string)
 
 
 class ConfigDispAction(argparse.Action):  # pylint: disable=R0903
@@ -70,7 +96,32 @@ def _read_config(fname):
                 tmp = line.split('=', 1)
                 key = tmp[0].strip()
                 val = tmp[1].strip()
-                data[sec][key] = val
+                val = os.path.expandvars(val)
+                tokens = RE.findall(val)
+                replacements = list()
+                for token in tokens:
+                    if ':' in token:
+                        tsec, tkey = token.split(':')
+                        tval = ''
+                        if tsec in data:
+                            if tkey in data[tsec]:
+                                tval = data[tsec][tkey]
+                    else:
+                        if token in data[sec]:
+                            tval = data[sec][token]
+                    replacements.append(
+                        ('${%s}' % token, tval)
+                    )
+                if replacements:
+                    # pylint: disable=W0142
+                    data[sec][key] = replace(val, *replacements)
+                else:
+                    data[sec][key] = val
+    # TEMPORARY: Testing the configuration parser
+    for sec in data:
+        print '[%s]' % sec
+        for key in data[sec]:
+            print '  %s = %s' % (key, data[sec][key])
     return data
 
 
