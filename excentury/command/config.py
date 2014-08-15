@@ -11,7 +11,7 @@ import sys
 import textwrap
 import argparse
 from collections import OrderedDict
-from excentury.command import error, import_mod
+from excentury.command import error, trace, import_mod
 
 DESC = """Edit a configuration file for excentury.
 
@@ -25,6 +25,12 @@ excentury uses for the given command.
 """
 
 RE = re.compile(r'\${(?P<key>.*?)}')
+RE_IF = re.compile(
+    r'(?P<iftrue>.*?) IF\[\[(?P<cond>.*?)\]\]'
+)
+RE_IFELSE = re.compile(
+    r'(?P<iftrue>.*?) IF\[\[(?P<cond>.*?)\]\]ELSE (?P<iffalse>.*)'
+)
 
 
 def disp(msg):
@@ -85,12 +91,52 @@ def add_parser(subp, raw):
                       help='print config file and exit')
 
 
+def _get_replacements(tokens, data, sec):
+    """Helper function for _read_config. """
+    replacements = list()
+    for token in tokens:
+        if ':' in token:
+            tsec, tkey = token.split(':')
+            tval = ''
+            if tsec in data:
+                if tkey in data[tsec]:
+                    tval = data[tsec][tkey]
+        else:
+            if token in data[sec]:
+                tval = data[sec][token]
+        replacements.append(
+            ('${%s}' % token, tval)
+        )
+    return replacements
+
+
+def _eval_condition(cond, line_num, fname):
+    """Evaluates a string using the eval function. It prints a
+    warning if there are any errors. Returns the result of the
+    evaluation and an error number: 0 if everything is fine, 1 if
+    there was an error. """
+    try:
+        cond = eval(cond)
+        enum = 0
+    except Exception as exception:
+        cond = None
+        enum = 1
+        trace(
+            'WARNING: error in line %d of %r: %s\n' % (
+                line_num, fname, exception.message
+            )
+        )
+    return cond, enum
+
+
 def _read_config(fname):
     """Simple parser to read configuration files. """
     data = OrderedDict()
     sec = None
+    line_num = 0
     with open(fname, 'r') as fhandle:
         for line in fhandle:
+            line_num += 1
             if line[0] == '[':
                 sec = line[1:-2]
                 data[sec] = OrderedDict()
@@ -99,26 +145,35 @@ def _read_config(fname):
                 key = tmp[0].strip()
                 val = tmp[1].strip()
                 val = os.path.expandvars(val)
-                tokens = RE.findall(val)
-                replacements = list()
-                for token in tokens:
-                    if ':' in token:
-                        tsec, tkey = token.split(':')
-                        tval = ''
-                        if tsec in data:
-                            if tkey in data[tsec]:
-                                tval = data[tsec][tkey]
-                    else:
-                        if token in data[sec]:
-                            tval = data[sec][token]
-                    replacements.append(
-                        ('${%s}' % token, tval)
-                    )
+                replacements = _get_replacements(
+                    RE.findall(val), data, sec
+                )
+                # pylint: disable=W0142
                 if replacements:
-                    # pylint: disable=W0142
-                    data[sec][key] = replace(val, *replacements)
+                    val = replace(val, *replacements)
+                match = RE_IFELSE.match(val)
+                if match:
+                    cond, enum = _eval_condition(
+                        match.group('cond'), line_num, fname
+                    )
+                    if enum == 1:
+                        continue
+                    iftrue = match.group('iftrue')
+                    iffalse = match.group('iffalse')
+                    val = iftrue if cond else iffalse
                 else:
-                    data[sec][key] = val
+                    match = RE_IF.match(val)
+                    if match:
+                        cond, enum = _eval_condition(
+                            match.group('cond'), line_num, fname
+                        )
+                        if enum == 1:
+                            continue
+                        if cond:
+                            val = match.group('iftrue')
+                        else:
+                            continue
+                data[sec][key] = val
     return data
 
 
