@@ -27,6 +27,12 @@ excentury uses for the given command.
 RE = re.compile(r'\${(?P<key>.*?)}')
 
 
+def disp(msg):
+    """Wrapper around sys.stdout.write which is meant to behave as
+    the print function but it does not add the newline character. """
+    sys.stdout.write(msg)
+
+
 def _replacer(*key_val):
     """Helper function for replace.
 
@@ -55,15 +61,13 @@ class ConfigDispAction(argparse.Action):  # pylint: disable=R0903
     configuration file and location."""
     def __call__(self, parser, namespace, values, option_string=None):
         try:
-            data = read_config(namespace)
+            read_config(namespace)
         except IOError:
-            print 'xcpp.config not found in %r' % namespace.cfg
+            disp('xcpp.config not found in %r\n' % namespace.cfg)
         else:
-            for sec in data:
-                sys.stdout.write('[%s]\n' % sec)
-                for key in data[sec]:
-                    sys.stdout.write('%s = %s\n' % (key, data[sec][key]))
-                sys.stdout.write('\n')
+            disp('path to xcpp.config: "%s"\n' % namespace.cfg)
+            with open('%s/xcpp.config' % namespace.cfg, 'r') as _fp:
+                disp(_fp.read())
         exit(0)
 
 
@@ -72,13 +76,11 @@ def add_parser(subp, raw):
     tmpp = subp.add_parser('config', help='configure excentury',
                            formatter_class=raw,
                            description=textwrap.dedent(DESC))
-    tmpp.add_argument('var', type=str,
+    tmpp.add_argument('var', type=str, nargs='?', default=None,
                       help='Must be in the form of sec.key')
-    tmpp.add_argument('value', type=str, nargs='?', default=None,
-                      help='var value')
     tmpp.add_argument('-v', action='store_true',
                       help='print config file location')
-    tmpp.add_argument('--display', action=ConfigDispAction,
+    tmpp.add_argument('--print', action=ConfigDispAction,
                       nargs=0,
                       help='print config file and exit')
 
@@ -117,11 +119,6 @@ def _read_config(fname):
                     data[sec][key] = replace(val, *replacements)
                 else:
                     data[sec][key] = val
-    # TEMPORARY: Testing the configuration parser
-    for sec in data:
-        print '[%s]' % sec
-        for key in data[sec]:
-            print '  %s = %s' % (key, data[sec][key])
     return data
 
 
@@ -143,37 +140,27 @@ def read_config(arg):
     return config
 
 
-def write_config(data, arg):
-    """Write the configuration file. """
-    with open('%s/xcpp.config' % arg.cfg, 'w') as fhandle:
-        for sec in data:
-            fhandle.write('[%s]\n' % sec)
-            for key in data[sec]:
-                fhandle.write('%s = %s\n' % (key, data[sec][key]))
-            fhandle.write('\n')
-
-
 def run(arg):
     """Run command. """
     config = read_config(arg)
+    if arg.v:
+        disp('path to xcpp.config: "%s"\n' % arg.cfg)
+    if arg.var is None:
+        for sec in config:
+            disp('[%s]\n' % sec)
+            for key in config[sec]:
+                disp('  %s = %s\n' % (key, config[sec][key]))
+            disp('\n')
+        return
     try:
         command, var = arg.var.split('.', 1)
     except ValueError:
         error("ERROR: '%s' is not of the form sec.key\n" % arg.var)
-    if arg.v:
-        print 'path to xcpp.config: "%s"' % arg.cfg
-    if arg.value is None:
-        try:
-            print config[command][var]
-        except KeyError:
-            pass
-        return
     try:
-        config[command][var] = arg.value
+        disp(config[command][var]+'\n')
     except KeyError:
-        config[command] = OrderedDict()
-        config[command][var] = arg.value
-    write_config(config, arg)
+        pass
+    return
 
 
 def _update_single(cfg, name, defaults=None):
