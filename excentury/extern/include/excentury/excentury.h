@@ -12,6 +12,9 @@ followed by an underscore and a name in capital letters.
 #ifndef EXCENTURY_H
 #define EXCENTURY_H
 
+// Includes mex.h
+#include "hook/matlab.h"
+
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>

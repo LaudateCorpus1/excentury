@@ -1,7 +1,5 @@
-// File generated on Sat Feb 08, 2014 12:38:07 PM by xcpp.
+// File generated on Fri Aug 15, 2014 03:24:06 AM by xcpp.
 #define XC_MATLAB
-#include "mex.h"
-//Comment before inclusion of excentury
 #include <excentury/excentury.h>
 //Comment for square_root
 void mexFunction(int nlhs, mxArray *plhs[],

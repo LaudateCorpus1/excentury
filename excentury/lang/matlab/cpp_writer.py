@@ -5,6 +5,7 @@ Helper module for writing cpp for communications with matlab.
 """
 
 import os
+import re
 from excentury.command import error, trace, exec_cmd, date
 from excentury.lang import format_input, format_return, gen_cmd
 from datetime import datetime
@@ -65,7 +66,8 @@ def _compile_cpp_file(in_fname, func, cfg):
             exec_cmd(cmd, True)
         else:
             _, err, _ = exec_cmd(cmd)
-            if err != '':
+            if (len(err.strip().split('\n')) > 1 or
+                    re.match('Configured with:.*?\n', err) is None):
                 msg = "\nERROR: The command\n%s\n\nreturned the following " \
                       "error:\n%s" % (str(cmd), str(err))
                 error(msg)
@@ -74,8 +76,6 @@ def _compile_cpp_file(in_fname, func, cfg):
 
 FILE = """// File generated on {date} by xcpp.
 #define XC_MATLAB
-#include "mex.h"
-{pre_xc}#include <excentury/excentury.h>
 {preamble}{funcpre}void mexFunction(int nlhs, mxArray *plhs[],
                  int nrhs, const mxArray *prhs[])
 {{
@@ -104,7 +104,7 @@ def write_cpp_function(xcf, func, cfg):
         fepi = '\n' + fepi
     if xcf.epilog != '':
         fepi += '\n'
-    content = FILE.format(date=date(), pre_xc=xcf.pre_xc,
+    content = FILE.format(date=date(),
                           preamble=xcf.preamble,
                           load=cfg['matlab']['load'].capitalize(),
                           inputs=format_input(func.param),
