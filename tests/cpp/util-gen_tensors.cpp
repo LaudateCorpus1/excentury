@@ -1,6 +1,6 @@
-// File generated on Wed Jan 29, 2014 10:13:32 PM by xcpp.
+// File generated on Fri Aug 15, 2014 02:18:15 AM by xcpp.
+#define XC_CPP
 #include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
 #include <objects.h>
 // gen_tensors
 void xc_help() {

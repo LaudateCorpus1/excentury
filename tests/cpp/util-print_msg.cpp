@@ -1,6 +1,6 @@
-// File generated on Wed Jan 22, 2014 02:27:30 AM by xcpp.
+// File generated on Fri Aug 15, 2014 02:18:14 AM by xcpp.
+#define XC_CPP
 #include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
 #include <objects.h>
 // print_msg
 void xc_help() {

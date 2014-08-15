@@ -1,3 +1,11 @@
+/** HOOK/CPP.H
+% Author: Manuel Lopez <jmlopez.rod@gmail.com>
+% License: BSD License
+% 2012 -- Aug 13, 2014
+*/
+
+#ifdef XC_CPP
+
 namespace excentury {
 
 void check_inputs(int num) {
@@ -33,3 +41,5 @@ void print_help(char** opt, void (*func)()) {
 }
 
 }
+
+#endif

@@ -1,12 +1,11 @@
 /** EXCENTURY.H
 % Author: Manuel Lopez <jmlopez.rod@gmail.com>
-% License: http://creativecommons.org/licenses/by-sa/3.0/
-% Date Created: July 05, 2012
-% Last Modified: November 26, 2013
+% License: BSD License
+% Jul 05, 2012 -- Aug 15, 2014
 
 This file provides access to all the functions and classes defined in
-excentury. All macros defined by excentury are start with XC
-(excentury) followed by an underscore and a name in capital letters.
+excentury. All macros defined by excentury start with XC (excentury)
+followed by an underscore and a name in capital letters.
 
 */
 
@@ -47,5 +46,7 @@ excentury. All macros defined by excentury are start with XC
 
 #include "tools/reporter.h"
 #include "tools/rand.h"
+
+#include "hook/cpp.h"
 
 #endif

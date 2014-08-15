@@ -11,8 +11,7 @@ from excentury.lang import write_file
 from datetime import datetime
 
 TEMPLATE = """// File generated on {date} by xcpp.
-{pre_xc}#include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
+#define XC_CPP
 {preamble}{funcpre}void xc_help() {{
     fprintf(stderr,
 {help});

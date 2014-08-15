@@ -1,7 +1,6 @@
-// File generated on Mon Apr 07, 2014 01:31:32 AM by xcpp.
-//Comment before inclusion of excentury
+// File generated on Fri Aug 15, 2014 02:15:52 AM by xcpp.
+#define XC_CPP
 #include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
 //Comment for test_rep
 void xc_help() {
     fprintf(stderr,

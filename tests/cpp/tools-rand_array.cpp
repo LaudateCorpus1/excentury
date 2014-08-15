@@ -1,7 +1,6 @@
-// File generated on Mon Apr 07, 2014 01:31:31 AM by xcpp.
-//Comment before inclusion of excentury
+// File generated on Fri Aug 15, 2014 02:15:51 AM by xcpp.
+#define XC_CPP
 #include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
 //Comment for rand_array
 void xc_help() {
     fprintf(stderr,

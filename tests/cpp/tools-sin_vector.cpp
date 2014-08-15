@@ -1,7 +1,6 @@
-// File generated on Mon Apr 07, 2014 01:31:33 AM by xcpp.
-//Comment before inclusion of excentury
+// File generated on Fri Aug 15, 2014 02:15:53 AM by xcpp.
+#define XC_CPP
 #include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
 //Comment for sin_vector
 void xc_help() {
     fprintf(stderr,
