@@ -5,7 +5,9 @@ excentury.
 
 """
 
+import os
 import sys
+import os.path as pth
 from datetime import datetime
 from subprocess import Popen, PIPE
 
@@ -19,6 +21,11 @@ def error(msg):
 def trace(msg):
     "Print a message to the standard error "
     sys.stderr.write(msg)
+
+
+def disp(msg):
+    "Print a message to the standard output "
+    sys.stdout.write(msg)
 
 
 def import_mod(name):
@@ -48,3 +55,18 @@ def date(short=False):
     if not short:
         return now.strftime("%a %b %d, %Y %r")
     return now.strftime("%Y-%m-%d-%H-%M-%S")
+
+
+def make_dir(path):
+    "Create a directory if it does not exist and return True. "
+    if pth.exists(path):
+        return False
+    os.makedirs(path)
+    return True
+
+
+def append_variable(var, val):
+    """Return a valid bash string to append a value to a variable. """
+    ans = 'if [[ ":$%s:" != *":%s:"* ]]; then\n' % (var, val)
+    ans += '    export %s=%s:$%s\n' % (var, val, var)
+    return ans + 'fi\n'
