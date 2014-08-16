@@ -93,7 +93,7 @@ def make_bashrc(arg):
     with open('.xcpprc', 'w') as rcf:
         rcf.write("# %s bash configuration file\n" % arg.name)
         rcf.write('ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"\n')
-        rcf.write('export XCPP_CONFIG_PATH=$ROOT/xcpp.config\n')
+        rcf.write('export XCPP_CONFIG_PATH=$ROOT\n')
         rcf.write(append_variable('PATH', '$ROOT/bin'))
         rcf.write(append_variable('LD_LIBRARY_PATH', '$ROOT/lib'))
         rcf.write(append_variable('MATLABPATH', '$ROOT/matlab'))

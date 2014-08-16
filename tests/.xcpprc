@@ -1,6 +1,6 @@
 # xc-tests bash configuration file
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export XCPP_CONFIG_PATH=$ROOT/xcpp.config
+export XCPP_CONFIG_PATH=$ROOT
 if [[ ":$PATH:" != *":$ROOT/bin:"* ]]; then
     export PATH=$ROOT/bin:$PATH
 fi

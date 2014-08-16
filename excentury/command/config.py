@@ -184,6 +184,7 @@ def read_config(arg):
         if 'XCPP_CONFIG_PATH' in os.environ:
             tmp_path = os.environ['XCPP_CONFIG_PATH']
             if os.path.exists('%s/xcpp.config' % tmp_path):
+                trace("Configured with: '%s/xcpp.config'\n" % tmp_path)
                 path = tmp_path
     elif not os.path.exists('%s/xcpp.config' % path):
         error("ERROR: %s/xcpp.config does not exist\n" % path)
