@@ -3,7 +3,8 @@ MATLABPATH := $(CURDIR)/matlab:$(MATLABPATH)
 all: test_cpp \
 	 test_tensor \
 	 test_python \
-	 test_matlab
+	 test_matlab \
+	 test_xcpp
 
 test_cpp:
 	nosetests -vs test_debug
@@ -26,3 +27,9 @@ test_matlab:
 	nosetests -vs test_dump_text:test_matlab_dump_text
 	nosetests -vs test_load_text:test_matlab_load_text
 	nosetests -vs test_load_text:test_matlab_parse_string
+
+test_xcpp:
+	nosetests -vs test_xcpp:test_xcpp_cpp
+	nosetests -vs test_xcpp:test_xcpp_python
+	nosetests -vs test_xcpp:test_xcpp_matlab
+
