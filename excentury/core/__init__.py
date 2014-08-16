@@ -6,6 +6,7 @@ as well as the readers.
 """
 
 import re
+import six
 import ctypes
 import numpy as np
 
@@ -21,6 +22,9 @@ ULONG = ctypes.c_ulong
 FLOAT = ctypes.c_float
 DOUBLE = ctypes.c_double
 VOIDP = ctypes.c_void_p
+
+if six.PY3:
+    long = int
 
 CTYPES = {
     str: CHAR,
@@ -394,7 +398,7 @@ def replace(string, key_val):
     return _replacer(key_val)(string)
 
 
-#pylint: disable=W0122
+# pylint: disable=W0122
 def load_datatype(obj, content):
     """The definitions in the file should suffice to create the
     object but that won't call an actual type. Use this to define how

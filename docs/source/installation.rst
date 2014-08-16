@@ -34,9 +34,9 @@ number):
     wget https://pypi.python.org/packages/source/e/excentury/excentury-x.y.tar.gz
     tar xvzf excentury-x.y.tar.gz
     cd excentury-x.y/
-    sudo python3 setup.py install
+    sudo python setup.py install
 
-The last command can be replaced by ``python3 setup.py install
+The last command can be replaced by ``python setup.py install
 --user``. See `PyPI <https://pypi.python.org/pypi/excentury/>`_ for
 all available versions.
 
@@ -51,7 +51,7 @@ script from python.
 
 .. code-block:: sh
 
-    python3 -m excentury install
+    python -m excentury install
 
 This will print several messages describing some paths. To verify
 that ``excentury`` is now in your path you can try the help option

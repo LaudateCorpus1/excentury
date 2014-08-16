@@ -5,7 +5,7 @@ Interface designed to dump text files.
 """
 
 import ctypes
-from cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 from excentury.core import XCStruct, XC_TYPES, CTYPES
 from excentury.core import Communicator, data, xc_type, c_type
 
@@ -103,7 +103,7 @@ class TextDumper(Communicator):
 
     def trans_num_classes(self):
         """Tranfer the number of objects in cls_obj. """
-        if (len(self.cls_obj) > 0):
+        if len(self.cls_obj) > 0:
             self._file.write("%d\n" % len(self.cls_obj))
         else:
             self._file.write("%d " % len(self.cls_obj))
