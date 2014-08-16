@@ -7,6 +7,8 @@ Creates an excentury project.
 import textwrap
 import os.path as pth
 from excentury.command import disp, make_dir, append_variable
+from excentury.command.add import update_entries
+
 
 DESC = """
 Creates an excentury configuration file along with directories to
@@ -104,3 +106,4 @@ def run(arg):
     make_directories()
     make_config_file(arg)
     make_bashrc(arg)
+    update_entries(pth.abspath('.'))
