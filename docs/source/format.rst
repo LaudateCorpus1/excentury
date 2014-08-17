@@ -56,7 +56,7 @@ scripting language. The following file for instance, does not contain
 all the necessary information to load variables into a scripting
 language.
 
-.. code-block:: xc
+.. code-block:: text
     :linenos:
     
     -1 3.14
@@ -65,23 +65,23 @@ Here we can tell that the file contains two values, the integer -1 and
 the real number 3.14. This however, does not say how it was previously
 stored in C++. One way to correct this is to write the file as follows
 
-.. code-block:: xc
+.. code-block:: text
     :linenos:
     
     2
     a I 4 -1
     b R 8 3.14
 
-The file states that are two variables. The first one is an integer
-of 4 bytes with value -1 and it should be assigned the name ``a``
-when loaded. The second variable is a real number of 8 bytes of value
-3.14 and should be named ``b``.
+The file states that it contains two variables. The first one is an
+integer of 4 bytes with value -1 and it should be assigned the name
+``a`` when loaded. The second variable is a real number of 8 bytes of
+value 3.14 and should be named ``b``.
 
 Structures
 ==========
 
-To store structures we need to find a way of serializing its information with
-the minimum amount of information. Suppose that we wish to store
+To store structures we need to find a way of serializing the object
+with the minimum amount of information. Suppose that we wish to store
 two structures, a ``Point`` and a ``Line``.
 
 .. code-block:: cpp
@@ -101,12 +101,12 @@ two structures, a ``Point`` and a ``Line``.
             a(a1, b1), b(a2, b2) {}
     };
 
-For the moment, let us assume that we have taught excentury how
-these two structures need to be serialized. A file containing a
-``Point`` named ``point_obj`` and a ``Line`` named ``line_obj`` may
-possibly look as follows
+For the moment, let us assume that we have taught excentury how these
+two structures need to be serialized. A file containing a ``Point``
+named ``point_obj`` and a ``Line`` named ``line_obj`` may possibly
+look as follows
 
-.. code-block:: xc
+.. code-block:: text
 
     2
     Point x R 8 y R 8
@@ -154,7 +154,7 @@ To store an array of integers of 4 bytes we could state the variable
 name followed by ``A I 4`` followed by the number of elements in the
 array and their values. For instance
 
-.. code-block:: xc
+.. code-block:: text
 
     array_name A I 4 3 1 2 3
 
@@ -162,7 +162,7 @@ This was the original idea on how to store arrays. Similarly for
 matrices we would use the letter ``M`` but this time we would use two
 values to store its dimension.
 
-.. code-block:: xc
+.. code-block:: text
 
     matrix_name M I 4 2 3 1 2 3 4 5 6
 
@@ -194,7 +194,7 @@ the tensor and its dimensions. Finally we write the data.
 To specify the previous array and matrix we would write the following
 excentury file
 
-.. code-block:: xc
+.. code-block:: text
 
     0 2
     array_name T I 4 0 1 3 1 2 3
@@ -216,7 +216,7 @@ Summary
 
 The excentury file format takes the following form
 
-.. code-block:: xc
+.. code-block:: text
 
     <number of definition>
     <structure name> [<member name> <type>] ...

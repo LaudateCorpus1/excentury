@@ -22,7 +22,6 @@ C++
 .. toctree::
    :maxdepth: 1
 
-    
     Debugging <cpp/debug>
 ..  API <cpp/api>
     
