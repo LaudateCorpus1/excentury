@@ -14,7 +14,8 @@ Basic Usage
 
     What is Excentury? <excentury>
     Installation <installation>
-    Excentury Format <format>
+    Getting Started <start>
+    Excentury Data Format <format>
 
 C++
 ===
