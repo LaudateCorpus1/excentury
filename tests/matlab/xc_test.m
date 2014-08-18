@@ -1,0 +1,9 @@
+clear all;
+
+x = xc_test.timestwo(2.0);
+y = xc_test.cube(3);
+
+excentury.dump_text('tmp.xc', ...
+    {x, 'x', 'double'}, ...
+    {y, 'y', 'int'} ...
+);

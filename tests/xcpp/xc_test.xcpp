@@ -1,0 +1,31 @@
+"""XC TEST
+
+This is a simple collection of functions to make sure that excentury
+can compile and run the code from each of functions.
+
+"""
+#include <excentury/excentury.h>
+
+----------------------------------------------------------------------
+@def{timestwo}
+    """Take a scalar and double it. """
+    @param{double, x(2), "scalar to be doubled."}
+@body[[
+    double result = 2*x;
+]]
+@ret[[
+    @ret{result}
+]]
+
+----------------------------------------------------------------------
+@def{cube}
+    """cube an integer"""
+    @param{int, x(3), "integer to be cubed."}
+@body[[
+    int result = x*x*x;
+]]
+@ret[[
+    @ret{result}
+]]
+
+----------------------------------------------------------------------

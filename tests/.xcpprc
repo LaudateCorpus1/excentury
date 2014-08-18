@@ -1,0 +1,9 @@
+# xc-tests bash configuration file
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export XCPP_CONFIG_PATH=$ROOT
+if [[ ":$MATLABPATH:" != *":$ROOT/matlab:"* ]]; then
+    export MATLABPATH=$ROOT/matlab:$MATLABPATH
+fi
+if [[ ":$PYTHONPATH:" != *":$ROOT/python:"* ]]; then
+    export PYTHONPATH=$ROOT/python:$PYTHONPATH
+fi
