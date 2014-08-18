@@ -4,7 +4,10 @@
 Installing Excentury
 ********************
 
-There is more than one way to install Excentury.
+Before we can get started adapting our C++ code to our favorite
+scripting language we must have a C++ compiler installed and a copy
+of Excentury. First we start with the installation of Excentury.
+There is more than one way to do this.
 
 The Easy Way
 ============

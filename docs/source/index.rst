@@ -24,15 +24,14 @@ C++
 
     Debugging <cpp/debug>
 ..  API <cpp/api>
-    
 
 
-Indices and tables
-==================
+.. Indices and tables
+.. ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
 
 
 -------
