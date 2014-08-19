@@ -110,14 +110,31 @@ def _get_replacements(tokens, data, sec):
     return replacements
 
 
-def _eval_condition(cond, line_num, fname):
+# pylint: disable=invalid-name
+# ARG and CFG are names that may be used in the configuration file.
+# ARG gives us access to the command line arguments and CFG gives us
+# access to the current configuration. Note that using CFG[key][sec]
+# is equivalent to ${key:sec}. These names go against the convention
+# so that they may be easy to spot in a configuration file.
+def _eval_condition(cond, ARG, CFG, line_num, fname):
     """Evaluates a string using the eval function. It prints a
     warning if there are any errors. Returns the result of the
     evaluation and an error number: 0 if everything is fine, 1 if
     there was an error. """
+    ARG.FILEPATH = '%s/%s/%s' % (ARG.cfg, CFG['xcpp']['path'], ARG.inputfile)
     try:
+        # pylint: disable=eval-used
+        # To be able to evaluate a condition without creating a whole
+        # new parser we can use the eval function. We could have use
+        # a python file as a configuration but then there would be
+        # no simple structure to the files.
         cond = eval(cond)
         enum = 0
+        # pylint: disable=broad-except
+        # Anything can go wrong during the execution of the `eval`
+        # function. For this reason we must try to catch anything that
+        # may come our way so that we may give out a warning message
+        # and ignore it.
     except Exception as exception:
         cond = None
         enum = 1
@@ -129,7 +146,7 @@ def _eval_condition(cond, line_num, fname):
     return cond, enum
 
 
-def _read_config(fname):
+def _read_config(fname, arg):
     """Simple parser to read configuration files. """
     data = OrderedDict()
     sec = None
@@ -148,24 +165,23 @@ def _read_config(fname):
                 replacements = _get_replacements(
                     RE.findall(val), data, sec
                 )
-                # pylint: disable=W0142
+                # pylint: disable=star-args
                 if replacements:
                     val = replace(val, *replacements)
                 match = RE_IFELSE.match(val)
                 if match:
                     cond, enum = _eval_condition(
-                        match.group('cond'), line_num, fname
+                        match.group('cond'), arg, data, line_num, fname
                     )
                     if enum == 1:
                         continue
-                    iftrue = match.group('iftrue')
-                    iffalse = match.group('iffalse')
-                    val = iftrue if cond else iffalse
+                    groups = match.groups()
+                    val = groups[0] if cond else groups[2]
                 else:
                     match = RE_IF.match(val)
                     if match:
                         cond, enum = _eval_condition(
-                            match.group('cond'), line_num, fname
+                            match.group('cond'), arg, data, line_num, fname
                         )
                         if enum == 1:
                             continue
@@ -190,7 +206,7 @@ def read_config(arg):
         error("ERROR: %s/xcpp.config does not exist\n" % path)
     arg.cfg = path
     try:
-        config = _read_config('%s/xcpp.config' % path)
+        config = _read_config('%s/xcpp.config' % path, arg)
     except IOError:
         config = OrderedDict()
     return config

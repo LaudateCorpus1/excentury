@@ -49,6 +49,7 @@ setup(name='excentury',
       scripts=['bin/excentury'],
       install_requires=[
           'numpy>=1.8.2',
+          'six>=1.7.3',
           ],
       package_data={'': ['*.h', '*.m']},
       include_package_data=True,

@@ -395,7 +395,6 @@ def gen_input_file(xcfile, filename):
     contains. """
     funcpre = ''.join([func.preamble for func in xcfile.function])
     cont = """// Temporary file generated on {date} by xcpp.
-{pre_xc}#include <excentury/excentury.h>
 {preamble}{funcpre}
 int main() {{
     excentury::TextInterface<excentury::dump_mode> XC_DI_(stdout);

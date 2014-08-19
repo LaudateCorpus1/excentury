@@ -66,8 +66,10 @@ def _compile_cpp_file(in_fname, func, cfg):
             exec_cmd(cmd, True)
         else:
             _, err, _ = exec_cmd(cmd)
-            if (len(err.strip().split('\n')) > 1 or
-                    re.match('Configured with:.*?\n', err) is None):
+            if err == '':
+                pass
+            elif (len(err.strip().split('\n')) > 1 or
+                  re.match('Configured with:.*?\n', err) is None):
                 msg = "\nERROR: The command\n%s\n\nreturned the following " \
                       "error:\n%s" % (str(cmd), str(err))
                 error(msg)

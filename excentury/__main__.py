@@ -42,7 +42,7 @@ def valid_files(parsed_args, **_):
     return choices
 
 
-#pylint: disable=W0212
+# pylint: disable=W0212
 def get_argparse_options(argp):
     """Helper function to preparse the arguments. """
     opt = dict()

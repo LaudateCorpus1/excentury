@@ -16,7 +16,7 @@ from excentury import to_text, load_file
 
 def test_xcpp_cpp():
     """[XCPP-CPP]: """
-    exec_cmd('excentury xc_test.xcpp to cpp')
+    exec_cmd('excentury xc_test.xcpp to cpp --force')
     cmd = 'xc_test-timestwo.run "%s"' % to_text(x=2.0)
     exp_out = '0 1\nresult R 8 4.000000 \n'
     exp_err = ''
@@ -29,7 +29,7 @@ def test_xcpp_cpp():
 
 def test_xcpp_python():
     """[XCPP-PYTHON]: """
-    exec_cmd('excentury xc_test.xcpp to python')
+    exec_cmd('excentury xc_test.xcpp to python --force')
     xc = __import__("xc_test")
     eq_(xc.timestwo(2.0), 4, "Failed...")
     eq_(xc.cube(3), 27, "Failed...")
@@ -37,7 +37,7 @@ def test_xcpp_python():
 
 def test_xcpp_matlab():
     """[XCPP-MATLAB]: """
-    exec_cmd('excentury xc_test.xcpp to matlab')
+    exec_cmd('excentury xc_test.xcpp to matlab --force')
     cmd = 'matlab -nodisplay -nosplash'
     run_cmd("%s < matlab/xc_test.m > /dev/null" % cmd, "", "")
     data = load_file('tmp.xc')
