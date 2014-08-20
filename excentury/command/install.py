@@ -30,18 +30,10 @@ def add_parser(subp, raw):
 def source_excenturyrc():
     """Source the .excenturyrc file in the .bashrc file. """
     make_dir(pth.expandvars('$HOME/.excentury'))
-    bash_map = {
-        'Darwin': '.bash_profile',
-        'darwin': '.bash_profile',
-        'Linux': '.bashrc',
-        'linux': '.bashrc',
-    }
-    platform = sys.platform
-    try:
-        bashrc_path = pth.expandvars('$HOME/%s' % bash_map[platform])
-    except KeyError:
-        disp('Error: %s platform not supported\n' % platform)
-        exit(2)
+    if sys.platform in ['Darwin', 'darwin']:
+        bashrc_path = pth.expandvars('$HOME/.bash_profile')
+    else:
+        bashrc_path = pth.expandvars('$HOME/.bashrc')
     disp('checking %s ... ' % bashrc_path)
     if pth.exists(bashrc_path):
         expr = [
@@ -81,10 +73,10 @@ def excenturyrc_str():
     # include
     path = pth.abspath(pth.dirname(__file__)+'/../extern/include')
     content += append_variable('C_INCLUDE_PATH', path)
-    content += append_variable('CPLUS_INCLUDE_PATH', path)  
+    content += append_variable('CPLUS_INCLUDE_PATH', path)
     # matlab
     path = pth.abspath(pth.dirname(__file__)+'/../extern/matlab')
-    content += append_variable('MATLABPATH', path)  
+    content += append_variable('MATLABPATH', path)
     # excentury/bin
     content += append_variable('PATH',
                                '%s/lib/excentury/bin' % userbase)
