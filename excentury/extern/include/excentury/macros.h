@@ -162,7 +162,7 @@ namespace excentury {
 #define XC_LOAD_TEMPLATED_TENSOR(temp_arg,object,var) \
     template<temp_arg, class Function, \
              template<mode m> class InterfaceType> \
-    inline void communicate(Function f, \
+    inline void communicate(Function, \
                             InterfaceType<load_mode>& interface, \
                             object& var, const char* varname)
 

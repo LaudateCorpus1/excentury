@@ -1,11 +1,13 @@
-// File generated on Tue Apr 15, 2014 12:46:50 PM by xcpp.
+// File generated on Thu Aug 21, 2014 05:37:06 PM by xcpp.
 /*Armadillo Test
 
 Collection of sample functions showing how to use the
 [Armadillo](http://arma.sourceforge.net/) library.*/
 #define XC_PYTHON
 #include <armadillo>
-#include <excentury/excentury.h>
+#include <xc>
+
+
 namespace excentury {
 XC_DUMP_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m, m.mem[0]) {
     size_t ndims = 2;
@@ -30,8 +32,8 @@ XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
     XC_SIZE(ndims);
     if (ndims != 2) {
         char msg[500];
-        sprintf(msg, "Armadillo Mat::load:\n"
-                "    dimension mismatch, needs dim = %d", 2);
+        sprintf(msg, "Armadillo Mat::load('%s'):\n" \
+                "    dimension mismatch, needs dim = 2", varname);
         excentury::error(msg);
     }
     size_t* dim = new size_t[ndims];
@@ -72,8 +74,9 @@ try {
     ncout = ex1_py_str.size();
     pcout = (char*)ex1_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    ex1_py_str = run_error.msg;
+    ncout = ex1_py_str.size();
+    pcout = (char*)ex1_py_str.data();
 }
 }
 void ex1_py_clear() {

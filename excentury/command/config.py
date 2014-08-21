@@ -104,6 +104,8 @@ def _get_replacements(tokens, data, sec):
         else:
             if token in data[sec]:
                 tval = data[sec][token]
+            else:
+                tval = ''
         replacements.append(
             ('${%s}' % token, tval)
         )

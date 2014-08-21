@@ -4,9 +4,8 @@ Collection of sample functions showing how to use the
 [Armadillo](http://arma.sourceforge.net/) library.
 
 """
-[[
 #include <armadillo>
-]]
+#include <xc>
 
 
 namespace excentury {
@@ -33,8 +32,8 @@ XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
     XC_SIZE(ndims);
     if (ndims != 2) {
         char msg[500];
-        sprintf(msg, "Armadillo Mat::load:\n"
-                "    dimension mismatch, needs dim = %d", 2);
+        sprintf(msg, "Armadillo Mat::load('%s'):\n" \
+                "    dimension mismatch, needs dim = 2", varname);
         excentury::error(msg);
     }
     size_t* dim = new size_t[ndims];
