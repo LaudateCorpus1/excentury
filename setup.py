@@ -14,10 +14,8 @@ def get_version():
 VERSION, VERSION_INFO = get_version()
 
 DESCRIPTION = "Call C++ from Python and MATLAB"
-LONG_DESCRIPTION = """
-Excentury is a set of libraries written in C++ that enables easy
-integration of C++ code into Python and MATLAB projects.
-"""
+LONG_DESCRIPTION = open(pt.join(pt.dirname(__file__), 'README.rst')).read()
+LONG_DESCRIPTION += open(pt.join(pt.dirname(__file__), 'HISTORY.rst')).read()
 
 DEV_STATUS_MAP = {
     'alpha': '3 - Alpha',

@@ -1,5 +1,18 @@
 .. _changelog:
 
+Change Log
+----------
+
+0.2.3 (2014-08-22)
+++++++++++++++++++
+
+- Added the history file.
+- The documentation has been changed to introduce excentury with a
+  simple example.
+- The `Armadillo <http://arma.sourceforge.net/>`_ library has been
+  adapted. See ``tests/xcpp/arma.xcpp`` for examples.
+
+
 0.2.2 (2014-08-20)
 ++++++++++++++++++
 
