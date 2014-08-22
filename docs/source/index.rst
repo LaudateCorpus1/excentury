@@ -16,6 +16,7 @@ Basic Usage
     Installation <installation>
     Getting Started <start>
     Excentury Data Format <format>
+    Linear Algebra: Armadillo <armadillo>
 
 C++
 ===
