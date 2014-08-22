@@ -1,4 +1,4 @@
-# File generated on Tue Apr 15, 2014 12:46:54 PM by xcpp.
+# File generated on Thu Aug 21, 2014 08:41:13 PM by xcpp.
 """Armadillo Test
 
 Collection of sample functions showing how to use the
@@ -28,7 +28,7 @@ def ex1(A, unpack=True):
       `A`: input matrix
     """
     tdump = TextDumper()
-    tdump.dump(A, "A", ['T', ['R', '8']])
+    tdump.dump(A, "A", ['T', ['R', '4']])
     in_str = tdump.close()
     len_in = len(in_str)
     out_str = ctypes.POINTER(c_char)()

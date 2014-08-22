@@ -50,10 +50,10 @@ XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
 @def{ex1}
     """Armadillo example 2: Computes the determinant and inverse of a
     matrix. """
-    @param{arma::mat, A(2, 2), "input matrix", A(0,0)}
+    @param{arma::fmat, A(2, 2), "input matrix", A(0,0)}
 @body[[
     double d = det(A);
-    arma::mat Ainv;
+    arma::fmat Ainv;
     try {
         Ainv = inv(A);
     } catch (std::runtime_error& run_error) {

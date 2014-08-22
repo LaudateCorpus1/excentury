@@ -1,4 +1,4 @@
-// File generated on Thu Aug 21, 2014 05:37:06 PM by xcpp.
+// File generated on Thu Aug 21, 2014 08:41:11 PM by xcpp.
 /*Armadillo Test
 
 Collection of sample functions showing how to use the
@@ -55,11 +55,11 @@ std::string ex1_py_str;
 void ex1_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
 try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
-    arma::mat A(2, 2); XC_LI_.load(A, A(0,0));
+    arma::fmat A(2, 2); XC_LI_.load(A, A(0,0));
     XC_LI_.close();
 
     double d = det(A);
-    arma::mat Ainv;
+    arma::fmat Ainv;
     try {
         Ainv = inv(A);
     } catch (std::runtime_error& run_error) {
