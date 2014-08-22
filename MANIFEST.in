@@ -4,5 +4,6 @@ recursive-include docs *
 include setup.py
 include LICENSE.rst
 include README.rst
+include HISTORY.rst
 include Makefile
 include MANIFEST.in
