@@ -1,7 +1,11 @@
-.. _changelog:
-
 Change Log
 ----------
+
+0.2.4 (2014-08-22)
+++++++++++++++++++
+
+- Fixed installation error. Missing HISTORY.rst in MANIFEST.in. 
+
 
 0.2.3 (2014-08-22)
 ++++++++++++++++++
