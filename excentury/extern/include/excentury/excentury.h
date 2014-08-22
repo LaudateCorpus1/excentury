@@ -51,5 +51,6 @@ followed by an underscore and a name in capital letters.
 #include "tools/rand.h"
 
 #include "hook/cpp.h"
+#include "hook/armadillo.h"
 
 #endif

@@ -495,7 +495,7 @@ dump_tensor(list, 'obj', 'obj[0]', '''
     XC_SIZE(len(obj))
     XC_ARRAY(obj, len(obj))
 ''')
-dump_tensor(np.ndarray, 'obj', 'obj.item(0)', '''
+dump_tensor(np.ndarray, 'obj', 'obj.flat.next()', '''
     if obj.flags.f_contiguous:
         XC_BYTE(0)
     else:

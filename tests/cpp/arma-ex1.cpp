@@ -1,7 +1,9 @@
-// File generated on Tue Apr 15, 2014 12:46:38 PM by xcpp.
+// File generated on Thu Aug 21, 2014 06:00:18 PM by xcpp.
+#define XC_CPP
 #include <armadillo>
-#include <excentury/excentury.h>
-#include <excentury/hook/cpp.h>
+#include <xc>
+
+
 namespace excentury {
 XC_DUMP_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m, m.mem[0]) {
     size_t ndims = 2;
@@ -26,8 +28,8 @@ XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
     XC_SIZE(ndims);
     if (ndims != 2) {
         char msg[500];
-        sprintf(msg, "Armadillo Mat::load:\n"
-                "    dimension mismatch, needs dim = %d", 2);
+        sprintf(msg, "Armadillo Mat::load('%s'):\n" \
+                "    dimension mismatch, needs dim = 2", varname);
         excentury::error(msg);
     }
     size_t* dim = new size_t[ndims];

@@ -1,56 +1,24 @@
-// File generated on Tue Apr 15, 2014 12:46:50 PM by xcpp.
+// File generated on Fri Aug 22, 2014 10:40:26 AM by xcpp.
 /*Armadillo Test
 
 Collection of sample functions showing how to use the
 [Armadillo](http://arma.sourceforge.net/) library.*/
 #define XC_PYTHON
 #include <armadillo>
-#include <excentury/excentury.h>
-namespace excentury {
-XC_DUMP_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m, m.mem[0]) {
-    size_t ndims = 2;
-    unsigned char rm = 0;
-    XC_BYTE(rm);
-    XC_SIZE(ndims);
-    size_t size = m.n_elem;
-    size_t dim[2] = {m.n_rows, m.n_cols};
-    XC_ARRAY(dim, ndims);
-    XC_ARRAY(m.mem, size);
-}
-XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
-    size_t ndims;
-    unsigned char rm;
-    XC_BYTE(rm);
-    if (rm != 0) {
-        char msg[500];
-        sprintf(msg, "Armadillo Mat::load:\n"
-                "    RM mismatch, got %d, needs %d.", rm, 0);
-        excentury::error(msg);
-    }
-    XC_SIZE(ndims);
-    if (ndims != 2) {
-        char msg[500];
-        sprintf(msg, "Armadillo Mat::load:\n"
-                "    dimension mismatch, needs dim = %d", 2);
-        excentury::error(msg);
-    }
-    size_t* dim = new size_t[ndims];
-    XC_ARRAY(dim, ndims);
-    m.resize(dim[0], dim[1]);
-    elementType* mem = const_cast<elementType*>(m.mem);
-    XC_ARRAY(mem, m.n_elem);
-    delete [] dim;
-}
-}
+#include <xc>
 
 extern "C" {
-    void ex1_py(size_t, char*, size_t&, char*&);
-    void ex1_py_clear();
+    void inverse_det_py(size_t, char*, size_t&, char*&);
+    void inverse_det_py_clear();
+    void qr_py(size_t, char*, size_t&, char*&);
+    void qr_py_clear();
+    void solve_py(size_t, char*, size_t&, char*&);
+    void solve_py_clear();
 
 }
 
-std::string ex1_py_str;
-void ex1_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+std::string inverse_det_py_str;
+void inverse_det_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
 try {
     excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
     arma::mat A(2, 2); XC_LI_.load(A, A(0,0));
@@ -65,18 +33,78 @@ try {
     }
 
     excentury::STextInterface<excentury::dump_mode> XC_DI_;
-    XC_DI_.dump(d, "detA");
     XC_DI_.dump(Ainv, "Ainv", Ainv(0, 0));
+    XC_DI_.dump(d, "detA");
     XC_DI_.close();
-    ex1_py_str = XC_DI_.str();
-    ncout = ex1_py_str.size();
-    pcout = (char*)ex1_py_str.data();
+    inverse_det_py_str = XC_DI_.str();
+    ncout = inverse_det_py_str.size();
+    pcout = (char*)inverse_det_py_str.data();
 } catch (excentury::RuntimeError& run_error) {
-    ncout = run_error.size();
-    pcout = (char*)run_error.c_str();
+    inverse_det_py_str = run_error.msg;
+    ncout = inverse_det_py_str.size();
+    pcout = (char*)inverse_det_py_str.data();
 }
 }
-void ex1_py_clear() {
-    ex1_py_str.clear();
+void inverse_det_py_clear() {
+    inverse_det_py_str.clear();
+}
+
+std::string qr_py_str;
+void qr_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
+    excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
+    arma::mat X(2, 2); XC_LI_.load(X, X(0,0));
+    XC_LI_.close();
+
+    arma::mat Q, R;
+    int status = arma::qr(Q, R, X);
+
+    excentury::STextInterface<excentury::dump_mode> XC_DI_;
+    XC_DI_.dump(Q, "Q", Q(0, 0));
+    XC_DI_.dump(R, "R", R(0, 0));
+    XC_DI_.dump(status, "status");
+    XC_DI_.close();
+    qr_py_str = XC_DI_.str();
+    ncout = qr_py_str.size();
+    pcout = (char*)qr_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    qr_py_str = run_error.msg;
+    ncout = qr_py_str.size();
+    pcout = (char*)qr_py_str.data();
+}
+}
+void qr_py_clear() {
+    qr_py_str.clear();
+}
+
+std::string solve_py_str;
+void solve_py(size_t ncin, char* pcin, size_t& ncout, char*& pcout) {
+try {
+    excentury::STextInterface<excentury::load_mode> XC_LI_(pcin, ncin);
+    arma::mat A(2, 2); XC_LI_.load(A, A(0,0));
+    arma::mat B(2, 2); XC_LI_.load(B, B(0,0));
+    XC_LI_.close();
+
+    arma::mat X;
+    try {
+        X = arma::solve(A,B);
+    } catch (std::exception& run_error) {
+        excentury::error(run_error.what());
+    }
+
+    excentury::STextInterface<excentury::dump_mode> XC_DI_;
+    XC_DI_.dump(X, "X", X(0, 0));
+    XC_DI_.close();
+    solve_py_str = XC_DI_.str();
+    ncout = solve_py_str.size();
+    pcout = (char*)solve_py_str.data();
+} catch (excentury::RuntimeError& run_error) {
+    solve_py_str = run_error.msg;
+    ncout = solve_py_str.size();
+    pcout = (char*)solve_py_str.data();
+}
+}
+void solve_py_clear() {
+    solve_py_str.clear();
 }
 

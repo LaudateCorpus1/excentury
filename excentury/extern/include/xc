@@ -1,0 +1,16 @@
+/** EXCENTURY
+% Author: Manuel Lopez <jmlopez.rod@gmail.com>
+% License: BSD License
+% Aug 20, 2014
+
+This file includes excentury and creates the namespace alias `xc`.
+
+*/
+
+#ifndef EXCENTURY_XC_H
+#define EXCENTURY_XC_H
+
+#include "excentury/excentury.h"
+namespace xc = excentury;
+
+#endif
