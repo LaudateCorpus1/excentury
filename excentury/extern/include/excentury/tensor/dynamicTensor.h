@@ -33,14 +33,15 @@
     if (rm != RM) { \
         char msg[500]; \
         sprintf(msg, "DynamicTensor::load:\n" \
-                "    RM mismatch, needs RM = %d", RM); \
+                "    RM mismatch, got %d, needs RM = %d", rm, RM); \
         excentury::error(msg); \
     } \
     XC_SIZE(ndims); \
     if (ndims != t.ndims()) { \
         char msg[500]; \
         sprintf(msg, "DynamicTensor::load:\n" \
-                "    dimension mismatch, needs dim = %d", t.ndims()); \
+                "    dimension mismatch, got %d, needs dim = %d", \
+                ndims, t.ndims()); \
         excentury::error(msg); \
     } \
     size_t* dim = new size_t[ndims]; \

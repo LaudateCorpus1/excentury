@@ -1,7 +1,6 @@
 import excentury as xc
 import arma
 
-a = xc.array([[1.0,2],[3,4]])
-a = a.astype('f')
-
-print arma.ex1(a)
+print arma.inverse_det(xc.array([[1.0, 2], [3, 4]]))
+print arma.qr(xc.array([[1.0, 2], [3, 4]]))
+print arma.solve(xc.array([[1.0, 2], [3, 4]]), xc.array([[1.0], [2.0]]))

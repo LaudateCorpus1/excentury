@@ -7,61 +7,54 @@ Collection of sample functions showing how to use the
 #include <armadillo>
 #include <xc>
 
-
-namespace excentury {
-XC_DUMP_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m, m.mem[0]) {
-    size_t ndims = 2;
-    unsigned char rm = 0;
-    XC_BYTE(rm);
-    XC_SIZE(ndims);
-    size_t size = m.n_elem;
-    size_t dim[2] = {m.n_rows, m.n_cols};
-    XC_ARRAY(dim, ndims);
-    XC_ARRAY(m.mem, size);
-}
-XC_LOAD_TEMPLATED_TENSOR(class elementType, arma::Mat<elementType>, m) {
-    size_t ndims;
-    unsigned char rm;
-    XC_BYTE(rm);
-    if (rm != 0) {
-        char msg[500];
-        sprintf(msg, "Armadillo Mat::load:\n"
-                "    RM mismatch, got %d, needs %d.", rm, 0);
-        excentury::error(msg);
-    }
-    XC_SIZE(ndims);
-    if (ndims != 2) {
-        char msg[500];
-        sprintf(msg, "Armadillo Mat::load('%s'):\n" \
-                "    dimension mismatch, needs dim = 2", varname);
-        excentury::error(msg);
-    }
-    size_t* dim = new size_t[ndims];
-    XC_ARRAY(dim, ndims);
-    m.resize(dim[0], dim[1]);
-    elementType* mem = const_cast<elementType*>(m.mem);
-    XC_ARRAY(mem, m.n_elem);
-    delete [] dim;
-}
-}
-
-
 ----------------------------------------------------------------------
-@def{ex1}
-    """Armadillo example 2: Computes the determinant and inverse of a
-    matrix. """
-    @param{arma::fmat, A(2, 2), "input matrix", A(0,0)}
+@def{inverse_det}
+    """Find the inverse and determinant of a square matrix using
+    the armadillo library."""
+    @param{arma::mat, A(2, 2), "input matrix", A(0,0)}
 @body[[
     double d = det(A);
-    arma::fmat Ainv;
+    arma::mat Ainv;
     try {
         Ainv = inv(A);
-    } catch (std::runtime_error& run_error) {
+    } catch (std::exception& run_error) {
         excentury::error(run_error.what());
     }
 ]]
 @ret[[
-    @ret{d, "detA"}
     @ret{Ainv, "Ainv", Ainv(0,0)}
+    @ret{d, "detA"}
+]]
+----------------------------------------------------------------------
+@def{qr}
+    """Decomposition of X into an orthogonal matrix Q and a right
+    triangular matrix R, such that Q*R = X."""
+    @param{arma::mat, X(2, 2), "input matrix", X(0,0)}
+@body[[
+    arma::mat Q, R;
+    int status = arma::qr(Q, R, X);
+]]
+@ret[[
+    @ret{Q, "Q", Q(0,0)}
+    @ret{R, "R", R(0,0)}
+    @ret{status, "status"}
+]]
+----------------------------------------------------------------------
+@def{solve}
+    """Solve a system of linear equations, A*X = B, where X is
+    unknown; similar functionality to the \\ operator in
+    Matlab/Octave, ie. X = A \\ B """
+    @param{arma::mat, A(2, 2), "matrix A", A(0,0)}
+    @param{arma::mat, B(2, 2), "matrix B", B(0,0)}
+@body[[
+    arma::mat X;
+    try {
+        X = arma::solve(A,B);
+    } catch (std::exception& run_error) {
+        excentury::error(run_error.what());
+    }
+]]
+@ret[[
+    @ret{X, "X", X(0,0)}
 ]]
 ----------------------------------------------------------------------
